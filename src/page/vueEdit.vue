@@ -1,7 +1,12 @@
 <template>
     <div>
         <head-top></head-top>
+
         <div class="edit_container">
+            <div class="edit_title">
+                <h3 class="">文章标题</h3>
+                <el-input v-model="title"></el-input>
+            </div>
         	<quill-editor v-model="content"
                 ref="myQuillEditor"
                 class="editer"
@@ -22,9 +27,10 @@
     export default {
         data(){
             return {
-                content: '<h3>文本编辑</h3>',
+                title : '',
+                content: '',
 			    editorOption: {
-			        
+
 		        }
             }
         },
@@ -42,7 +48,7 @@
 		        console.log('editor ready!', editor)
 		    },
 		    submit(){
-                console.log(this.content);
+                console.log(this.title, this.content);
                 this.$message.success('提交成功！');
             }
         },
@@ -58,6 +64,9 @@
 	.editer{
 		height: 350px;
 	}
+    .edit_title {
+        margin-bottom: 10px;
+    }
 	.submit_btn{
 		text-align: center;
 	}
