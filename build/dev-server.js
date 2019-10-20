@@ -10,9 +10,7 @@ var path = require('path')
 var express = require('express')
 var webpack = require('webpack')
 var proxyMiddleware = require('http-proxy-middleware')
-var webpackConfig = process.env.NODE_ENV === 'testing'
-  ? require('./webpack.prod.conf')
-  : require('./webpack.dev.conf')
+var webpackConfig = require('./webpack.dev.conf')
 
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || config.dev.port
@@ -24,6 +22,23 @@ var proxyTable = config.dev.proxyTable
 
 var app = express()
 var compiler = webpack(webpackConfig)
+// 日志
+var log4js = require('../server_modules/log.js').log4js;
+var logger = require('../server_modules/log.js').logger;
+
+// 数据库
+var mongoose = require('../server_modules/mongodb.js');
+
+/*引入*/
+require('../router/routes')(app)
+
+if ('development' === app.get('env')) {
+    app.set('showStackError', true)
+    // app.use(morgan(':method :url :status'))
+    app.use(log4js.connectLogger(logger, {level:log4js.levels.INFO}))
+    app.locals.pretty = true
+    mongoose.set('debug', true)
+}
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
   publicPath: webpackConfig.output.publicPath,
@@ -42,27 +57,14 @@ compiler.plugin('compilation', function (compilation) {
 })
 
 // proxy api requests
-// Object.keys(proxyTable).forEach(function (context) {
-//   var options = proxyTable[context]
-//   if (typeof options === 'string') {
-//     options = { target: options }
-//   }
-//   app.use(proxyMiddleware(options.filter || context, options))
-// })
+Object.keys(proxyTable).forEach(function (context) {
+  var options = proxyTable[context]
+  if (typeof options === 'string') {
+    options = { target: options }
+  }
+  app.use(proxyMiddleware(options.filter || context, options))
+})
 
-var context = config.dev.context
-
-switch(process.env.NODE_ENV){
-    case 'local': var proxypath = 'http://localhost:8001'; break;
-    case 'online': var proxypath = 'http://elm.cangdu.org'; break;
-}
-var options = {
-    target: proxypath,
-    changeOrigin: true,
-}
-if (context.length) {
-    app.use(proxyMiddleware(context, options))
-}
 // handle fallback for HTML5 history API
 app.use(require('connect-history-api-fallback')())
 
