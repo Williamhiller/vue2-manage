@@ -1,8 +1,8 @@
 var mongoose = require('mongoose')
 //聊天记录模型
 var CountSchema = new mongoose.Schema({
-  username: String,
-  roomInfo: String
+    username: String,
+    roomInfo: String
 })
 //静态方法
 CountSchema.statics = {

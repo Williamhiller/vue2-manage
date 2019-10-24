@@ -28,7 +28,6 @@ var logger = require('../server_modules/log.js').logger;
 
 // 数据库
 var mongoose = require('../server_modules/mongodb.js');
-
 /*引入*/
 require('../router/routes')(app)
 
