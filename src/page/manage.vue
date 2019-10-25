@@ -24,7 +24,6 @@
 <!--					</el-submenu>-->
 					<el-submenu index="5">
 						<template slot="title"><i class="el-icon-edit"></i>编辑</template>
-						<!-- <el-menu-item index="uploadImg">上传图片</el-menu-item> -->
 						<el-menu-item index="vueEdit">文本编辑</el-menu-item>
 					</el-submenu>
 					<el-submenu index="6">

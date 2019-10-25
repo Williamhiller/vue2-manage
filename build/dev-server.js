@@ -20,7 +20,23 @@ var autoOpenBrowser = !!config.dev.autoOpenBrowser
 // https://github.com/chimurai/http-proxy-middleware
 var proxyTable = config.dev.proxyTable
 
+var bodyParser = require('body-parser')
+var cookieParser = require('cookie-parser')
+var session = require('cookie-session')
+
 var app = express()
+
+//服务器提交的数据json化
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}))
+//sesstion 存储
+app.use(cookieParser())
+app.use(session({
+    secret: 'winManage',
+    resave: false,
+    saveUninitialized: true
+}))
+
 var compiler = webpack(webpackConfig)
 // 日志
 var log4js = require('../server_modules/log.js').log4js;

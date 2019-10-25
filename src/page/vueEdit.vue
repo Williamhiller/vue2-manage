@@ -21,6 +21,7 @@
 </template>
 
 <script>
+    import { uploadArticle } from '@/api/getData'
     import headTop from '../components/headTop'
     import { quillEditor } from 'vue-quill-editor'
 
@@ -29,9 +30,7 @@
             return {
                 title : '',
                 content: '',
-			    editorOption: {
-
-		        }
+			    editorOption: {}
             }
         },
     	components: {
@@ -47,9 +46,29 @@
 		    onEditorReady(editor) {
 		        console.log('editor ready!', editor)
 		    },
-		    submit(){
-                console.log(this.title, this.content);
-                this.$message.success('提交成功！');
+            async submit(){
+                if(this.title === '') {
+                    this.$message.warning('标题不能为空！');
+                    return;
+                }
+                if(this.content === '') {
+                    this.$message.warning('内容不能为空！');
+                    return;
+                }
+                let params = {
+                    title: this.title,
+                    content: this.content
+                }
+                console.log(params)
+                const res = await uploadArticle(params)
+                if (res.data.code === 200) {
+                    this.$message({
+                        type: 'success',
+                        message: '添加成功'
+                    });
+                }else{
+                    this.$message.error("添加失败");
+                }
             }
         },
     }

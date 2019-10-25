@@ -25,7 +25,7 @@
 </template>
 
 <script>
-	import {login, getAdminInfo} from '@/api/getData'
+	import {login} from '@/api/getData'
 	import {mapActions, mapState} from 'vuex'
 
 	export default {
@@ -60,8 +60,8 @@
 			async submitForm(formName) {
 				this.$refs[formName].validate(async (valid) => {
 					if (valid) {
-						const res = await login({test: 90})
-						if (res.code === 200) {
+						const res = await login({name: this.loginForm.username, password: this.loginForm.password})
+						if (res.data.code === 200) {
 							this.$message({
 		                        type: 'success',
 		                        message: '登录成功'
@@ -70,15 +70,14 @@
 						}else{
 							this.$message({
 		                        type: 'error',
-		                        message: res.message
+		                        message: res.data.message
 		                    });
 						}
 					} else {
-						this.$notify.error({
-							title: '错误',
-							message: '请输入正确的用户名密码',
-							offset: 100
-						});
+                        this.$message({
+                            type: 'error',
+                            message: '请输入正确的用户名密码'
+                        });
 						return false;
 					}
 				});

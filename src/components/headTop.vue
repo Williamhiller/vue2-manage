@@ -28,7 +28,7 @@
     	},
     	created(){
     		if (!this.adminInfo.id) {
-    			// this.getAdminData()
+    			this.getAdminData()
     		}
     	},
     	computed: {
