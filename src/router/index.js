@@ -8,6 +8,7 @@ const manage = r => require.ensure([], () => r(require('@/page/manage')), 'manag
 const home = r => require.ensure([], () => r(require('@/page/home')), 'home');
 const userList = r => require.ensure([], () => r(require('@/page/userList')), 'userList');
 const vueEdit = r => require.ensure([], () => r(require('@/page/vueEdit')), 'vueEdit');
+const myAnalyze = r => require.ensure([], () => r(require('@/page/myAnalyze')), 'myAnalyze');
 const explain = r => require.ensure([], () => r(require('@/page/explain')), 'explain');
 
 const routes = [
@@ -32,6 +33,10 @@ const routes = [
 			component: vueEdit,
 			meta: ['编辑', '文本编辑'],
 		},{
+            path: '/myAnalyze',
+            component: myAnalyze,
+            meta: ['编辑', '比赛分析'],
+        },{
 			path: '/explain',
 			component: explain,
 			meta: ['说明', '说明'],
