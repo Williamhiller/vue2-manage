@@ -3,10 +3,33 @@
         <head-top></head-top>
 
         <div class="edit_container">
-            <div class="edit_title">
-                <h3 class="">文章标题</h3>
-                <el-input v-model="title"></el-input>
-            </div>
+            <el-row :gutter="20">
+                <el-col :span="6">
+                    <div class="edit_title">
+                        <h3 class="">联赛</h3>
+                        <el-input v-model="title"></el-input>
+                    </div>
+                </el-col>
+                <el-col :span="6">
+                    <div class="edit_title">
+                        <h3 class="">轮次</h3>
+                        <el-input v-model="title"></el-input>
+                    </div>
+                </el-col>
+                <el-col :span="6">
+                    <div class="edit_title">
+                        <h3 class="">球探编号</h3>
+                        <el-input v-model="title"></el-input>
+                    </div>
+                </el-col>
+                <el-col :span="6">
+                    <div class="edit_title">
+                        <h3 class="">球探编号</h3>
+                        <el-input v-model="title"></el-input>
+                    </div>
+                </el-col>
+            </el-row>
+
         	<quill-editor v-model="content"
                 ref="myQuillEditor"
                 class="editer"
