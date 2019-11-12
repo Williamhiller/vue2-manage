@@ -18,7 +18,10 @@ export const getAdminInfo = () => Axios.get('/admin/info');
 /**
  * 保存文章
  */
-export const uploadArticle = data => Axios.post('/article/upload', data);
+export const uploadArticle = data => Axios.post('/article/upload', data);/**
+ * 保存文章
+ */
+export const uploadMyArticle = data => Axios.post('/analyze/upload', data);
 /**
  * api请求量
  */

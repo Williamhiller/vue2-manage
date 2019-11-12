@@ -65,4 +65,8 @@ module.exports = (app) => {
             })
         });
     })
+
+    app.post('/analyze/upload', (req, res) => {
+
+    })
 };

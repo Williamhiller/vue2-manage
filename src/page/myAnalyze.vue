@@ -7,26 +7,23 @@
                 <el-col :span="6">
                     <div class="edit_title">
                         <h3 class="">联赛</h3>
-                        <el-input v-model="title"></el-input>
+                        <el-input v-model="match"></el-input>
                     </div>
                 </el-col>
                 <el-col :span="6">
                     <div class="edit_title">
                         <h3 class="">轮次</h3>
-                        <el-input v-model="title"></el-input>
+                        <el-input v-model="round"></el-input>
                     </div>
                 </el-col>
                 <el-col :span="6">
                     <div class="edit_title">
                         <h3 class="">球探编号</h3>
-                        <el-input v-model="title"></el-input>
+                        <el-input v-model="code"></el-input>
                     </div>
                 </el-col>
                 <el-col :span="6">
-                    <div class="edit_title">
-                        <h3 class="">球探编号</h3>
-                        <el-input v-model="title"></el-input>
-                    </div>
+
                 </el-col>
             </el-row>
 
@@ -51,7 +48,9 @@
     export default {
         data(){
             return {
-                title : '',
+                match : '',
+                round : '',
+                code : '',
                 content: '',
 			    editorOption: {}
             }
@@ -70,8 +69,8 @@
 		        console.log('editor ready!', editor)
 		    },
             async submit(){
-                if(this.title === '') {
-                    this.$message.warning('标题不能为空！');
+                if(this.code === '') {
+                    this.$message.warning('编号不能为空！');
                     return;
                 }
                 if(this.content === '') {
@@ -79,11 +78,12 @@
                     return;
                 }
                 let params = {
-                    title: this.title,
+                    round: this.round,
+                    code: this.code,
                     content: this.content
                 }
                 console.log(params)
-                const res = await uploadArticle(params)
+                const res = await uploadMyArticle(params)
                 if (res.data.code === 200) {
                     this.$message({
                         type: 'success',
