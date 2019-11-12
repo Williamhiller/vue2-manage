@@ -1,8 +1,6 @@
 
 let fs = require("fs");
 let location = "../../data/";
-let utils = require("../../utils/utils");
-
 
 let allArrOne = JSON.parse(fs.readFileSync(location+"calclevel/recent6.json","utf-8"));
 let allArrWin = JSON.parse(fs.readFileSync(location+"calclevel/recent6Win.json","utf-8"));

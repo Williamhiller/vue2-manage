@@ -59,7 +59,6 @@ let writeFun = function (data,first) {
         }
 
     });
-    console.log(guest)
 
     let output = "";
     output +=  `${matchData.homeName}-${matchData.guestName}\n`;

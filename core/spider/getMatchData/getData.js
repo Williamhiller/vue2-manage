@@ -18,7 +18,6 @@ module.exports = function (url) {
 
         return _page.open(_url);
     }).then(function (status) {
-        console.log(status);
 
         return _page.evaluate(function () {
             var data = {};
@@ -38,7 +37,7 @@ module.exports = function (url) {
             matchData.homeCode = h2h_home;
             matchData.guestName = guestteam;
             matchData.guestCode = h2h_away;
-            // matchData.league = document.querySelector('.LName').innerHTML;// 联赛名称
+            matchData.league = document.querySelector('.LName').innerHTML;// 联赛名称
             matchData.homeData = h_data;
             matchData.guestData = a_data;
             matchData.historyData = v_data;
@@ -57,7 +56,6 @@ module.exports = function (url) {
         _page.close();
         _ph.exit(0);
     }).catch(function (e) {
-        console.log(e);
         deferred.reject(e);
     });
 

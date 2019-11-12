@@ -16,9 +16,10 @@ let saveData = { // 保存威廉和立博的初赔信息
 /**
  * 自动生成分析矩阵
  * @param data
- * @param mongo
  */
-let writeFun = function (data,mongo) {
+let writeFun = function (data) {
+    console.log(data.matchData.guestData[0])
+
     let matchData = data.matchData;
     // 开始解析近况往绩
     let history = "" , home = ["",""], guest = ["",""];
@@ -75,32 +76,21 @@ let writeFun = function (data,mongo) {
     });
 
     let output;
-    if(mongo) {
-        output = calcScore(history,home,guest,mongo);
-        output.league = matchData.league;
-        output.homeName = matchData.homeName;
-        output.guestName = matchData.guestName;
-        output.home = saveData.W[0];
-        output.draw = saveData.W[1];
-        output.guest = saveData.W[2];
-        output.kickback = saveData.W[4];
-    }else {
-        output = "";
-        output +=  `${matchData.homeName}-${matchData.guestName}\n`;
-        output += `往绩${utils.getMatchOverview(history)}（${history}）\n`;
-        output += `主队${utils.getMatchOverview(home[0])}（${home[0]}） `;
-        output += `主场${utils.getMatchOverview(home[1])}（${home[1]}）\n`;
-        output += `客队${utils.getMatchOverview(guest[0])}（${guest[0]}） `;
-        output += `客场${utils.getMatchOverview(guest[1])}（${guest[1]}）\n`;
-        output += calcScore(history,home,guest);
+    output = "";
+    output +=  `${matchData.homeName}-${matchData.guestName}\n`;
+    output += `往绩${utils.getMatchOverview(history)}（${history}）\n`;
+    output += `主队${utils.getMatchOverview(home[0])}（${home[0]}） `;
+    output += `主场${utils.getMatchOverview(home[1])}（${home[1]}）\n`;
+    output += `客队${utils.getMatchOverview(guest[0])}（${guest[0]}） `;
+    output += `客场${utils.getMatchOverview(guest[1])}（${guest[1]}）\n`;
+    output += calcScore(history,home,guest);
 
-        output += `威廉 ${saveData.W[0].toFixed(2)} ${saveData.W[1].toFixed(2)} ${saveData.W[2].toFixed(2)} >${saveData.W[3]}\n`;
-        output += `立博 ${saveData.L[0].toFixed(2)} ${saveData.L[1].toFixed(2)} ${saveData.L[2].toFixed(2)} >${saveData.L[3]}\n`;
+    output += `威廉 ${saveData.W[0].toFixed(2)} ${saveData.W[1].toFixed(2)} ${saveData.W[2].toFixed(2)} >${saveData.W[3]}\n`;
+    output += `立博 ${saveData.L[0].toFixed(2)} ${saveData.L[1].toFixed(2)} ${saveData.L[2].toFixed(2)} >${saveData.L[3]}\n`;
 
-        fs.writeFile(location+'analyze/gameAnalyze.txt',output,function(err){
-            console.log("fs-write-success",err)
-        });
-    }
+    // fs.writeFile(location+'analyze/gameAnalyze.txt',output,function(err){
+    //     console.log("fs-write-success",err)
+    // });
 
     return output;
 };
@@ -108,10 +98,9 @@ let writeFun = function (data,mongo) {
 /**
  * 获取比赛输出信息
  * @param code
- * @param mongo 是否来自mongo的查询 true
  * @returns {Promise<any>}
  */
-let start = function (code,mongo) {
+let start = function (code) {
 
     return new Promise((resolve, reject) => {
         getData(`http://zq.win007.com/analysis/${code}cn.htm`).then(function (data) {
@@ -160,12 +149,12 @@ let start = function (code,mongo) {
                     }
 
                 });
-                resolve(writeFun(data,mongo))
+                resolve(writeFun(data))
             });
         });
     });
 };
-// start(1552504);
+start(1735008);
 
 module.exports = start;
 

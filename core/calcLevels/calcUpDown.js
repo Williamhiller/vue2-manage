@@ -1,7 +1,6 @@
 
 let fs = require("fs");
 let location = "../../data/";
-let utils = require("../../utils/utils");
 
 
 let allArrWin = JSON.parse(fs.readFileSync(location+"calclevel/recent6Win.json","utf-8"));
@@ -83,9 +82,9 @@ let calc = function (o,h,a) {
 
 module.exports = calc;
 // 1代表上盘，0下盘，走盘情况比较少，直接按
-let text = calc("030333",["000003","030330"],["033000","300333"]);
+// let text = calc("030333",["000003","030330"],["033000","300333"]);
 
-fs.appendFile(location+'calclevel/test.txt',text,function(err){
-    console.log("success",err)
-});
+// fs.appendFile(location+'calclevel/test.txt',text,function(err){
+//     console.log("success",err)
+// });
 

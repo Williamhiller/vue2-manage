@@ -30,7 +30,8 @@
     "vue-router": "^2.3.1",
     "vue-simplemde": "^0.3.8",
     "vuex": "^2.3.1",
-    "superagent": "^3.5.2"
+    "superagent": "^3.5.2",
+    "phantom": "^6.0.3"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
