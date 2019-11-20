@@ -3,7 +3,6 @@
  */
 
 let phantom = require('phantom');
-let Q = require("q");
 let _ph, _page;
 
 module.exports = function (url) {

@@ -41,7 +41,7 @@
 </template>
 
 <script>
-    import { uploadArticle } from '@/api/getData'
+    import { uploadMyArticle } from '@/api/getData'
     import headTop from '../components/headTop'
     import { quillEditor } from 'vue-quill-editor'
 
