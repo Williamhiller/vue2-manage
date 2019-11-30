@@ -7,6 +7,7 @@ import 'element-ui/lib/theme-default/index.css'
 
 Vue.config.productionTip = false;
 
+import  './filters'
 Vue.use(ElementUI);
 
 new Vue({

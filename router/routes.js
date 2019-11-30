@@ -1,7 +1,8 @@
 
 const Ids = require('../models/id')
 const Article = require('../models/article')
-const setAnalyzeArticle = require('../manage/setAnalyzeArticle')
+// const setAnalyzeArticle = require('../manage/setAnalyzeArticle')
+const pushRouter = require('./pushRouter')
 
 module.exports = (app) => {
     app.use((req, res, next) => {
@@ -10,6 +11,8 @@ module.exports = (app) => {
 
         next()
     })
+
+    pushRouter(app)
 
     app.get('/admin/info', (req, res) => {
         res.json({
@@ -69,16 +72,16 @@ module.exports = (app) => {
     app.post('/analyze/upload', async (req, res) => {
         const _article = req.body;
 
-        setAnalyzeArticle(_article).then( ()=> {
-            res.json({
-                code : 200,
-                message : '登录成功！'
-            })
-        }, error => {
-            res.json({
-                code : 400,
-                message : error
-            })
-        })
+        // setAnalyzeArticle(_article).then( ()=> {
+        //     res.json({
+        //         code : 200,
+        //         message : '登录成功！'
+        //     })
+        // }, error => {
+        //     res.json({
+        //         code : 400,
+        //         message : error
+        //     })
+        // })
     })
 };

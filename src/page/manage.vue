@@ -29,7 +29,7 @@
 					</el-submenu>
 					<el-submenu index="6">
 						<template slot="title"><i class="el-icon-setting"></i>设置</template>
-						<el-menu-item index="adminSet">管理员设置</el-menu-item>
+						<el-menu-item index="push">APP推送设置</el-menu-item>
 						<!-- <el-menu-item index="sendMessage">发送通知</el-menu-item> -->
 					</el-submenu>
 					<el-submenu index="7">

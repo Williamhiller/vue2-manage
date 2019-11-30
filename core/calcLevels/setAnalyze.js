@@ -2,12 +2,11 @@
 
  爬取单场比赛的分析数据，欧赔细节等
  */
-let fs = require("fs");
-let location = "../../data/";
+
 let getData = require('../spider/getMatchData/getData'); // 获取联赛数据，近况往绩等
 let getOddData = require('../spider/getMatchData/getOddData'); // 获取欧赔数据
 let utils = require("../../utils/utils");
-let calcScore = require("../calcLevels/calcScore");
+
 
 let saveData = { // 保存威廉和立博的初赔信息
     W : [],
@@ -18,7 +17,6 @@ let saveData = { // 保存威廉和立博的初赔信息
  * @param data
  */
 let writeFun = function (data) {
-    console.log(data.matchData.guestData[0])
 
     let matchData = data.matchData;
     // 开始解析近况往绩
@@ -83,7 +81,7 @@ let writeFun = function (data) {
     output += `主场${utils.getMatchOverview(home[1])}（${home[1]}）\n`;
     output += `客队${utils.getMatchOverview(guest[0])}（${guest[0]}） `;
     output += `客场${utils.getMatchOverview(guest[1])}（${guest[1]}）\n`;
-    output += calcScore(history,home,guest);
+    // output += calcScore(history,home,guest);
 
     output += `威廉 ${saveData.W[0].toFixed(2)} ${saveData.W[1].toFixed(2)} ${saveData.W[2].toFixed(2)} >${saveData.W[3]}\n`;
     output += `立博 ${saveData.L[0].toFixed(2)} ${saveData.L[1].toFixed(2)} ${saveData.L[2].toFixed(2)} >${saveData.L[3]}\n`;

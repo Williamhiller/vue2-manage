@@ -36,9 +36,19 @@ export const apiCount = data => Axios.get('/statis/api/' + data + '/count');
 export const getUserList = data => Axios.get('/v1/users/list', data);
 
 /**
- * 获取用户数量
+ * 获取推送信息
  */
 
-export const getUserCount = data => Axios.get('/v1/users/count', data);
+export const getPushList = () => Axios.get('/push/list',);
 
+/**
+ *  创建推送信息
+ */
+
+export const setPush = data => Axios.post('/push/set', data);
+/**
+ *  创建推送信息
+ */
+
+export const deletePush = id => Axios.delete(`/push/delete/${id}`);
 

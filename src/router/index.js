@@ -10,6 +10,7 @@ const userList = r => require.ensure([], () => r(require('@/page/userList')), 'u
 const vueEdit = r => require.ensure([], () => r(require('@/page/vueEdit')), 'vueEdit');
 const myAnalyze = r => require.ensure([], () => r(require('@/page/myAnalyze')), 'myAnalyze');
 const explain = r => require.ensure([], () => r(require('@/page/explain')), 'explain');
+const push = r => require.ensure([], () => r(require('@/page/push')), 'push');
 
 const routes = [
 	{
@@ -40,12 +41,15 @@ const routes = [
 			path: '/explain',
 			component: explain,
 			meta: ['说明', '说明'],
-		}]
+		},{
+            path: '/push',
+            component: push,
+            meta: ['设置', 'APP推送设置'],
+        }]
 	}
 ]
 
 export default new Router({
-
 	routes,
 	strict: process.env.NODE_ENV !== 'production',
 })
