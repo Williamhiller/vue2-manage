@@ -1,7 +1,7 @@
 
 const Ids = require('../models/id')
 const Article = require('../models/article')
-// const setAnalyzeArticle = require('../manage/setAnalyzeArticle')
+const setAnalyze = require('../core/calcLevels/setAnalyze')
 const pushRouter = require('./pushRouter')
 
 module.exports = (app) => {
@@ -70,8 +70,21 @@ module.exports = (app) => {
     })
 
     app.post('/analyze/upload', async (req, res) => {
-        const _article = req.body;
+        const _analyze = req.body;
 
+        let data = await setAnalyze(_analyze.code);
+        let params = {
+            code: _analyze.code,
+            match: _analyze.match,
+            round : _analyze.round,
+            homeName : data.homeName,
+            guestName : data.guestName,
+            homeScore : data.homeScore,
+            guestScore : data.guestScore,
+            first : data.first,
+            // odd : Object,
+            analyse: _analyze.content
+        };
         // setAnalyzeArticle(_article).then( ()=> {
         //     res.json({
         //         code : 200,

@@ -83,15 +83,17 @@ let writeFun = function (data) {
     output += `客场${utils.getMatchOverview(guest[1])}（${guest[1]}）\n`;
     // output += calcScore(history,home,guest);
 
-    output += `威廉 ${saveData.W[0].toFixed(2)} ${saveData.W[1].toFixed(2)} ${saveData.W[2].toFixed(2)} >${saveData.W[3]}\n`;
+    data.first = `${saveData.W[0].toFixed(2)} ${saveData.W[1].toFixed(2)} ${saveData.W[2].toFixed(2)} >${saveData.W[3]}`;
+    output += `威廉 ${data.first}\n`;
     output += `立博 ${saveData.L[0].toFixed(2)} ${saveData.L[1].toFixed(2)} ${saveData.L[2].toFixed(2)} >${saveData.L[3]}\n`;
 
+    data.output = output;
     // fs.writeFile(location+'analyze/gameAnalyze.txt',output,function(err){
     //     console.log("fs-write-success",err)
     // });
-    console.log(data)
 
-    return output;
+
+    return data;
 };
 
 /**
@@ -148,10 +150,6 @@ let start = async function (code) {
 
     return writeFun(data)
 };
-async function init() {
-    console.log(await start(1806078));
-}
-init();
 
 module.exports = start;
 
