@@ -46,4 +46,4 @@ if ('development' === app.get('env')) {
   mongoose.set('debug', true)
 }
 
-app.listen(port)
+app.listen(port);
