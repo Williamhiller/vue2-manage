@@ -20,7 +20,6 @@ const actions = {
 	async getAdminData({commit}){
 		try{
 			const res = await getAdminInfo()
-            console.log(res.data)
 			if (res.data.code === 200) {
 				commit('saveAdminInfo', res.data.data);
 			}else{

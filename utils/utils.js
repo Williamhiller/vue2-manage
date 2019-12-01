@@ -2,6 +2,26 @@
 module.exports = {
 
     /**
+     * 获取北京时间
+     * @param date
+     * @returns {Date}
+     */
+    getLocalTime (date) {
+        // let hours = offset || 8;
+        // 取本地时间
+        let localtime = date ? new Date(date) : new Date();
+        // 取本地毫秒数
+        let localmesc = localtime.getTime();
+        // 取本地时区与格林尼治所在时区的偏差毫秒数
+        let localOffset = localtime.getTimezoneOffset() * 60000;
+        // 反推得到格林尼治时间
+        let utc = localOffset + localmesc;
+        // 得到指定时区时间
+        let calctime = utc + (3600000 * 8);
+
+        return new Date(calctime);
+    },
+    /**
      * 深拷贝
      * @param obj
      * @returns {any}

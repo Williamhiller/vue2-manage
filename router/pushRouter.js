@@ -1,6 +1,6 @@
 
 const Pushs = require('../models/push')
-
+const schedule = require('../core/push')
 module.exports = (app) => {
     app.get('/push/list', async (req, res) => {
         let list = await Pushs.find({});
@@ -45,5 +45,31 @@ module.exports = (app) => {
                 message: '保存成功'
             })
         })
+    })
+
+    app.post('/push/toggle', async (req, res) => {
+        const params = req.body;
+
+        if(params.schedule === 'status') {
+            res.json({
+                code : 200,
+                status: schedule.getStatus()
+            });
+            return
+        }
+        if(params.schedule === 'open') {
+            schedule.start(function () {
+                res.json({
+                    code : 200,
+                    message: '成功'
+                });
+            });
+        }else {
+            schedule.cancel();
+            res.json({
+                code : 200,
+                message: '成功'
+            });
+        }
     })
 }

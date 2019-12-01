@@ -1,8 +1,10 @@
 import Vue from 'vue'
 
-
-Vue.filter('capitalize', function (value) {
-    if (!value) return ''
-    value = value.toString()
-    return value.charAt(0).toUpperCase() + value.slice(1)
+const moment = require('moment');
+Vue.filter('dateFormat', function (value) {
+    let date = '';
+    if(value) {
+        date = moment(new Date(value)).format("YYYY-MM-DD")
+    }
+    return date
 })

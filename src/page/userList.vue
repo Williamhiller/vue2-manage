@@ -41,7 +41,7 @@
 
 <script>
     import headTop from '../components/headTop'
-    import {getUserList, getUserCount} from '@/api/getData'
+    import {getUserList} from '@/api/getData'
     export default {
         data(){
             return {
@@ -65,17 +65,7 @@
         },
         methods: {
             async initData(){
-                try{
-                    const countData = await getUserCount();
-                    if (countData.status == 1) {
-                        this.count = countData.count;
-                    }else{
-                        throw new Error('获取数据失败');
-                    }
-                    this.getUsers();
-                }catch(err){
-                    console.log('获取数据失败', err);
-                }
+
             },
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);

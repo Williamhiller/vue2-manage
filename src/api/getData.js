@@ -51,4 +51,8 @@ export const setPush = data => Axios.post('/push/set', data);
  */
 
 export const deletePush = id => Axios.delete(`/push/delete/${id}`);
+/**
+ *  开启或关闭
+ */
 
+export const changeSwitch = data => Axios.post(`/push/toggle`, data);

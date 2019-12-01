@@ -28,8 +28,9 @@
                       end: '24:00'
                     }">
                 </el-time-select>
+                <el-input v-model="time"></el-input>
                 <el-row :gutter="20" class="mt20">
-                    <el-col :span="8">
+                    <el-col :span="20">
                         <el-checkbox-group v-model="week">
                             <el-checkbox label="周一"></el-checkbox>
                             <el-checkbox label="周二"></el-checkbox>
@@ -54,21 +55,30 @@
                         <el-button type="primary" @click="setPush()">提交</el-button>
                     </el-col>
                 </el-row>
-                <div v-bind:id="rawId | dateFormat"></div>
+                <div class="mt20">
+                    <el-switch
+                        v-model="openPush"
+                        @change="changeSwitch()"
+                        active-color="#13ce66"
+                        inactive-color="#ff4949"
+                        active-text="关闭"
+                        inactive-text="开启">
+                    </el-switch>
+                </div>
                 <div  class="mt20">
                     <el-table
                         :data="list"
                         border
                         style="width: 100%">
                         <el-table-column
-                            prop="date"
+                            prop="type"
                             label="类型"
                             width="180">
                         </el-table-column>
                         <el-table-column
-                            prop="date"
                             label="日期"
-                            width="180">
+                            width="180px">
+                            <template slot-scope="scope">{{ scope.row.date | dateFormat}}</template>
                         </el-table-column>
                         <el-table-column
                             prop="time"
@@ -79,13 +89,13 @@
                             label="周">
                         </el-table-column>
                         <el-table-column
-                            prop="text  | capitalize"
+                            prop="text"
                             label="内容">
                         </el-table-column>
                         <el-table-column
                             label="操作">
                             <template  slot-scope="scope">
-                                <el-button type="danger" size="small" @click="deletePush(scope.row)">删除</el-button>
+                                <el-button type="danger" size="mini" @click="deletePush(scope.row)">删除</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -97,22 +107,18 @@
 
 <script>
 	import headTop from '../components/headTop'
-    import {getPushList, setPush, deletePush} from '@/api/getData'
+    import {getPushList, setPush, deletePush, changeSwitch} from '@/api/getData'
     export default {
     	data(){
     		return {
                 options: [{
-                    value: '喝水',
-                    label: '喝水'
+                    value: '喝水', label: '喝水'
                 }, {
-                    value: '工作',
-                    label: '工作'
+                    value: '工作', label: '工作'
                 }, {
-                    value: '出行',
-                    label: '出行'
+                    value: '出行', label: '出行'
                 }, {
-                    value: '其它',
-                    label: '其它'
+                    value: '其它', label: '其它'
                 }],
                 type: '',
                 date: '',
@@ -120,28 +126,27 @@
                 text : '',
                 week : [],
                 list: [],
-                rawId: '233dddddd'
+                openPush: true
     		}
     	},
-        filters: {
-            dateFormat(value) {
-                if (!value) return ''
-                value = value.toString()
-                return value.charAt(0).toUpperCase() + value.slice(1)
-            }
-        },
     	components: {
     		headTop
     	},
     	mounted(){
-            this.getPushList()
+            this.initData()
     	},
         computed: {
         },
     	methods: {
+            async initData(){
+                const res = await changeSwitch({
+                    schedule: 'status'
+                });
+                this.openPush = !!res.data.status;
+                this.getPushList();
+            },
     		async getPushList(){
                 const res = await getPushList()
-                console.log(res.data)
                 this.list = res.data.data;
     		},
             async setPush() {
@@ -169,6 +174,18 @@
                         message: '删除成功'
                     });
                 }
+            },
+            async changeSwitch() {
+    		    let params = {
+                    schedule : this.openPush ? 'open' : 'cancel'
+                };
+                const set = await changeSwitch(params);
+                if(set.data.code === 200) {
+                    this.$message({
+                        type: 'success',
+                        message: '成功'
+                    });
+                }
             }
     	}
     }
@@ -181,6 +198,7 @@
         .section_title {
             font-size: 18px;
             margin-bottom: 10px;
+            text-align: left;
         }
     }
 	.mt20 {
