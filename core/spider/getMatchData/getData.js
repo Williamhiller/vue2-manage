@@ -21,16 +21,6 @@ module.exports = function (url) {
 
         return _page.evaluate(function () {
             var data = {};
-            var bet365D = document.getElementById("tr_o_1_8");
-            var initial = {};
-            var bet365;
-
-            if(bet365D) {
-                bet365 = bet365D.querySelectorAll("td");
-                initial.up = parseFloat(bet365[11].innerHTML);
-                initial.position = bet365[12].innerHTML;
-                initial.down = parseFloat(bet365[13].innerHTML);
-            }
 
             var matchData = {};
             matchData.homeName = hometeam;
@@ -43,15 +33,11 @@ module.exports = function (url) {
             matchData.historyData = v_data;
 
             data.matchData = matchData;
-            data.initial = initial;
 
             return data;
         });
     }).then(function (data) {
-        let dataAll = data;
-        dataAll.initial.position = getNumberPos(dataAll.initial.position || "");
-
-        deferred.resolve(dataAll);
+        deferred.resolve(data);
 
         _page.close();
         _ph.exit(0);
@@ -61,19 +47,4 @@ module.exports = function (url) {
 
     return deferred.promise;
 };
-
-/**
- * 分数盘口转小数盘口
- * @param deno 字符串形式的分数盘
- * @returns {number}
- */
-function getNumberPos(deno) {
-    let pos = 0;
-    let arr = deno.split("/");
-    arr.forEach(function (item) {
-        pos += parseFloat(item);
-    });
-
-    return deno?pos/arr.length : 0;
-}
 

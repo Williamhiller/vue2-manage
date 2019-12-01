@@ -98,61 +98,59 @@ let writeFun = function (data) {
  * @param code
  * @returns {Promise<any>}
  */
-let start = function (code) {
+let start = async function (code) {
 
-    return new Promise((resolve, reject) => {
-        getData(`http://zq.win007.com/analysis/${code}cn.htm`).then(function (data) {
-            // 获取欧赔数据
-            let url = `http://op1.win007.com/oddslist/${code}.htm`;
-
-            getOddData(url).then(function (oddData) {
-                // data game和gameDetail 其中game 大概在第26位置 82|code|Ladbrokes  William Hill
-                let L_code , W_code;
-                oddData.game.forEach(function (item) {
-                    if(item.indexOf("|Ladbrokes|") !== -1) {
-                        L_code = item.split("|")[1];
-                    }
-                    if(item.indexOf("|William Hill|") !== -1) {
-                        W_code = item.split("|")[1];
-                    }
-                });
-                if(!L_code && !W_code) {
-                    resolve("");
-                    return;
-                }
-
-                oddData.gameDetail.forEach(function (item) {
-                    let arr = item.split("^");
-                    if(arr[0] === L_code || arr[0] === W_code) {
-                        let allData = arr[1].split(";");
-                        let detail = allData[allData.length-2].split("|");
-                        let a = parseFloat(detail[0]),
-                            b = parseFloat(detail[1]),
-                            c = parseFloat(detail[2]);
-                        let rate = a*b*c*100/(a*b+a*c+b*c);
-                        rate = Math.round(rate*100)/100;
-
-                        let date = detail[3];
-                        // "04-27 19:11".split("-");
-                        if(date.split("-")[0].length < 4) { // 判断第一个是否是年，有可能是有年份的
-                            date = new Date().getFullYear() + "-" +date;
-                        }
-                        let iData = [a,b,c,date,rate];
-                        if(arr[0] === L_code) {
-                            saveData.L = iData
-                        }
-                        if(arr[0] === W_code) {
-                            saveData.W = iData
-                        }
-                    }
-
-                });
-                resolve(writeFun(data))
-            });
-        });
+    let data = await getData(`http://zq.win007.com/analysis/${code}cn.htm`);
+    // 获取欧赔数据
+    let url = `http://op1.win007.com/oddslist/${code}.htm`;
+    let oddData = await getOddData(url);
+    // data game和gameDetail 其中game 大概在第26位置 82|code|Ladbrokes  William Hill
+    let L_code , W_code;
+    oddData.game.forEach(function (item) {
+        if(item.indexOf("|Ladbrokes|") !== -1) {
+            L_code = item.split("|")[1];
+        }
+        if(item.indexOf("|William Hill|") !== -1) {
+            W_code = item.split("|")[1];
+        }
     });
+    if(!L_code && !W_code) {
+        return '';
+    }
+
+    oddData.gameDetail.forEach(function (item) {
+        let arr = item.split("^");
+        if(arr[0] === L_code || arr[0] === W_code) {
+            let allData = arr[1].split(";");
+            let detail = allData[allData.length-2].split("|");
+            let a = parseFloat(detail[0]),
+                b = parseFloat(detail[1]),
+                c = parseFloat(detail[2]);
+            let rate = a*b*c*100/(a*b+a*c+b*c);
+            rate = Math.round(rate*100)/100;
+
+            let date = detail[3];
+            // "04-27 19:11".split("-");
+            if(date.split("-")[0].length < 4) { // 判断第一个是否是年，有可能是有年份的
+                date = new Date().getFullYear() + "-" +date;
+            }
+            let iData = [a,b,c,date,rate];
+            if(arr[0] === L_code) {
+                saveData.L = iData
+            }
+            if(arr[0] === W_code) {
+                saveData.W = iData
+            }
+        }
+
+    });
+
+    return writeFun(data)
 };
-start(1735008);
+async function init() {
+    console.log(await start(1806078));
+}
+init();
 
 module.exports = start;
 
