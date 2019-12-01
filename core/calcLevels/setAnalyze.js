@@ -89,6 +89,7 @@ let writeFun = function (data) {
     // fs.writeFile(location+'analyze/gameAnalyze.txt',output,function(err){
     //     console.log("fs-write-success",err)
     // });
+    console.log(data)
 
     return output;
 };
