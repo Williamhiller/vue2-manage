@@ -111,15 +111,17 @@ const scheduleStart = (list)=>{
     // 秒、分、时、日、月、周几
     hasStart = true;
     scheduler = schedule.scheduleJob('00 35 * * * *',()=>{
-        console.log('******** run',new Date())
+        console.log('******** run',new Date());
         scheduleCancel();
         hasStart = true;
         parseList()
     });
 };
-function scheduleCancel() {
+function scheduleCancel(cancel) {
     if(hasStart) {
-        scheduler.cancel();
+        if(cancel) {
+            scheduler.cancel();
+        }
         hasStart = false;
         for(let key in timerObj) {
             clearTimeout(timerObj[key])
@@ -138,7 +140,7 @@ module.exports = {
         fn();
     },
     cancel (){
-        scheduleCancel();
+        scheduleCancel(true);
         console.log('******** cancel',new Date())
     },
     getStatus (){
