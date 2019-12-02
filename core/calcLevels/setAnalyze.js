@@ -7,16 +7,12 @@ let getData = require('../spider/getMatchData/getData'); // 获取联赛数据�
 let getOddData = require('../spider/getMatchData/getOddData'); // 获取欧赔数据
 let utils = require("../../utils/utils");
 
-
-let saveData = { // 保存威廉和立博的初赔信息
-    W : [],
-    L : []
-};
 /**
  * 自动生成分析矩阵
  * @param data
+ * @param saveData
  */
-let writeFun = function (data) {
+let writeFun = function (data, saveData) {
 
     let matchData = data.matchData;
     // 开始解析近况往绩
@@ -83,11 +79,11 @@ let writeFun = function (data) {
     output += `客场${utils.getMatchOverview(guest[1])}（${guest[1]}）\n`;
     // output += calcScore(history,home,guest);
 
-    data.first = `${saveData.W[0].toFixed(2)} ${saveData.W[1].toFixed(2)} ${saveData.W[2].toFixed(2)} >${saveData.W[3]}`;
+    data.matchData.first = `${saveData.W[0].toFixed(2)} ${saveData.W[1].toFixed(2)} ${saveData.W[2].toFixed(2)} >${saveData.W[3]}`;
     output += `威廉 ${data.first}\n`;
     output += `立博 ${saveData.L[0].toFixed(2)} ${saveData.L[1].toFixed(2)} ${saveData.L[2].toFixed(2)} >${saveData.L[3]}\n`;
 
-    data.output = output;
+    data.matchData.output = output;
     // fs.writeFile(location+'analyze/gameAnalyze.txt',output,function(err){
     //     console.log("fs-write-success",err)
     // });
@@ -102,7 +98,10 @@ let writeFun = function (data) {
  * @returns {Promise<any>}
  */
 let start = async function (code) {
-
+    let saveData = { // 保存威廉和立博的初赔信息
+        W : [],
+        L : []
+    };
     let data = await getData(`http://zq.win007.com/analysis/${code}cn.htm`);
     // 获取欧赔数据
     let url = `http://op1.win007.com/oddslist/${code}.htm`;
@@ -148,7 +147,7 @@ let start = async function (code) {
 
     });
 
-    return writeFun(data)
+    return writeFun(data,saveData)
 };
 
 module.exports = start;

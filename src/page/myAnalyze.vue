@@ -41,7 +41,7 @@
 </template>
 
 <script>
-    import { uploadMyArticle } from '@/api/getData'
+    import { uploadAnalyze } from '@/api/getData'
     import headTop from '../components/headTop'
     import { quillEditor } from 'vue-quill-editor'
 
@@ -78,12 +78,13 @@
                     return;
                 }
                 let params = {
+                    match: this.match,
                     round: this.round,
                     code: this.code,
                     content: this.content
-                }
-                console.log(params)
-                const res = await uploadMyArticle(params)
+                };
+
+                const res = await uploadAnalyze(params);
                 if (res.data.code === 200) {
                     this.$message({
                         type: 'success',
