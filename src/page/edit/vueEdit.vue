@@ -22,7 +22,7 @@
 
 <script>
     import { uploadArticle } from '@/api/getData'
-    import headTop from '../components/headTop'
+    import headTop from '../../components/headTop'
     import { quillEditor } from 'vue-quill-editor'
 
     export default {
@@ -75,7 +75,7 @@
 </script>
 
 <style lang="less">
-	@import '../style/mixin';
+	@import '../../style/mixin';
 	.edit_container{
 		padding: 40px;
 		margin-bottom: 40px;

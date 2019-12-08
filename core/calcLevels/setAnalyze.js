@@ -80,7 +80,7 @@ let writeFun = function (data, saveData) {
     // output += calcScore(history,home,guest);
 
     data.matchData.first = `${saveData.W[0].toFixed(2)} ${saveData.W[1].toFixed(2)} ${saveData.W[2].toFixed(2)} >${saveData.W[3]}`;
-    output += `威廉 ${data.first}\n`;
+    output += `威廉 ${data.matchData.first}\n`;
     output += `立博 ${saveData.L[0].toFixed(2)} ${saveData.L[1].toFixed(2)} ${saveData.L[2].toFixed(2)} >${saveData.L[3]}\n`;
 
     data.matchData.output = output;
@@ -149,7 +149,6 @@ let start = async function (code) {
 
     return writeFun(data,saveData)
 };
-
 module.exports = start;
 
 

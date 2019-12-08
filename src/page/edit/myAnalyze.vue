@@ -19,14 +19,18 @@
                 <el-col :span="6">
                     <div class="edit_title">
                         <h3 class="">球探编号</h3>
-                        <el-input v-model="code"></el-input>
+                        <el-input v-model="code" @keyup.13.native="getData"></el-input>
                     </div>
                 </el-col>
                 <el-col :span="6">
 
                 </el-col>
             </el-row>
-
+            <el-collapse v-model="activeNames">
+                <el-collapse-item title="对战数据" name="1">
+                    <pre>{{matchData.output}}</pre>
+                </el-collapse-item>
+            </el-collapse>
         	<quill-editor v-model="content"
                 ref="myQuillEditor"
                 class="editer"
@@ -41,18 +45,20 @@
 </template>
 
 <script>
-    import { uploadAnalyze } from '@/api/getData'
-    import headTop from '../components/headTop'
+    import { getCodeData,uploadAnalyze } from '@/api/getData'
+    import headTop from '../../components/headTop'
     import { quillEditor } from 'vue-quill-editor'
 
     export default {
         data(){
             return {
+                activeNames : ['1'],
                 match : '',
                 round : '',
                 code : '',
                 content: '',
-			    editorOption: {}
+			    editorOption: {},
+                matchData : {}
             }
         },
     	components: {
@@ -68,6 +74,12 @@
 		    onEditorReady(editor) {
 		        console.log('editor ready!', editor)
 		    },
+            async getData() {
+		        let res = await getCodeData(this.code)
+                if(res.data.code === 200) {
+                    this.matchData = res.data.data;
+                }
+            },
             async submit(){
                 if(this.code === '') {
                     this.$message.warning('编号不能为空！');
@@ -77,11 +89,19 @@
                     this.$message.warning('内容不能为空！');
                     return;
                 }
+                let matchData = this.matchData
                 let params = {
                     match: this.match,
                     round: this.round,
                     code: this.code,
-                    content: this.content
+                    content: this.content,
+                    homeName : matchData.homeName,
+                    guestName : matchData.guestName,
+                    homeScore : matchData.homeScore,
+                    guestScore : matchData.guestScore,
+                    first : matchData.first,
+                    output: matchData.output,
+                    analyse: matchData.content
                 };
 
                 const res = await uploadAnalyze(params);
@@ -90,6 +110,7 @@
                         type: 'success',
                         message: '添加成功'
                     });
+                    Object.assign(this.$data, this.$options.data.call(this));
                 }else{
                     this.$message.error("添加失败");
                 }
@@ -99,7 +120,7 @@
 </script>
 
 <style lang="less">
-	@import '../style/mixin';
+	@import '../../style/mixin';
 	.edit_container{
 		padding: 40px;
 		margin-bottom: 40px;

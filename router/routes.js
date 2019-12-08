@@ -1,9 +1,8 @@
 
 const Ids = require('../models/id')
 const Article = require('../models/article')
-const Analyze = require('../models/analyze')
-const setAnalyze = require('../core/calcLevels/setAnalyze')
 const pushRouter = require('./pushRouter')
+const analyzeRouter = require('./analyzeRouter')
 
 module.exports = (app) => {
     app.use((req, res, next) => {
@@ -14,6 +13,7 @@ module.exports = (app) => {
     })
 
     pushRouter(app)
+    analyzeRouter(app)
 
     app.get('/admin/info', (req, res) => {
         res.json({
@@ -66,41 +66,6 @@ module.exports = (app) => {
                     code: 200,
                     data: '添加成功'
                 })
-            })
-        });
-    })
-
-    app.post('/analyze/upload', async (req, res) => {
-        const _analyze = req.body;
-
-        let data = await setAnalyze(_analyze.code);
-        let matchData = data.matchData;
-        let params = {
-            code: _analyze.code,
-            match: _analyze.match,
-            round : _analyze.round,
-            homeName : matchData.homeName,
-            guestName : matchData.guestName,
-            homeScore : matchData.homeScore,
-            guestScore : matchData.guestScore,
-            first : matchData.first,
-            // odd : Object,
-            analyse: _analyze.content
-        };
-        console.log('-------',params)
-        console.log('-------',data)
-        Analyze.update({code : _analyze.code}, params,{upsert: true}, (idErr, as)  => {
-            console.log(idErr, as)
-            if (idErr) {
-                res.json({
-                    code : 400,
-                    message : idErr
-                })
-                return
-            }
-            res.json({
-                code : 200,
-                message : '保存成功！'
             })
         });
     })

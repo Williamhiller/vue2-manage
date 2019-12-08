@@ -22,6 +22,14 @@ export const uploadArticle = data => Axios.post('/article/upload', data);
 /**
  * 保存分析
  */
+export const getCodeData = code => Axios.get(`/analyze/qiutan/${code}`);
+/**
+ * 保存分析
+ */
+export const getAnalyzeByCode = code => Axios.get(`/analyze/${code}`);
+/**
+ * 保存分析
+ */
 export const uploadAnalyze = data => Axios.post('/analyze/upload', data);
 /**
  * api请求量

@@ -106,7 +106,7 @@
 </template>
 
 <script>
-	import headTop from '../components/headTop'
+	import headTop from '../../components/headTop'
     import {getPushList, setPush, deletePush, changeSwitch} from '@/api/getData'
     export default {
     	data(){
@@ -192,7 +192,7 @@
 </script>
 
 <style lang="less">
-	@import '../style/mixin';
+	@import '../../style/mixin';
     .data_section {
         padding: 20px;
         .section_title {

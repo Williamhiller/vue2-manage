@@ -9,7 +9,7 @@
 </template>
 
 <script>
-	import headTop from '../components/headTop'
+	import headTop from '../../components/headTop'
     export default {
     	components: {
     		headTop,
@@ -18,7 +18,7 @@
 </script>
 
 <style lang="less">
-	@import '../style/mixin';
+	@import '../../style/mixin';
 	.explain_text{
 		margin-top: 20px;
 		text-align: center;
