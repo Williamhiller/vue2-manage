@@ -23,7 +23,33 @@ module.exports = (app) => {
         }
 
     })
+    app.get('/analyze/list', async (req, res) => {
+        const _analyze = req.body;
+        let params = {};
+        if(_analyze.code) {
+            params.code = _analyze.code;
+        }
+        if(_analyze.match) {
+            params.match = _analyze.match;
+        }
+        if(_analyze.round) {
+            params.round = _analyze.round;
+        }
 
+        Analyze.find(params, (idErr, list)  => {
+            if (idErr) {
+                res.json({
+                    code : 400,
+                    message : idErr
+                })
+                return
+            }
+            res.json({
+                code : 200,
+                data : list
+            })
+        });
+    })
     app.post('/analyze/upload', async (req, res) => {
         const _analyze = req.body;
         let params = {

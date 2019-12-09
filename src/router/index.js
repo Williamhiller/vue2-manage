@@ -41,6 +41,7 @@ const routes = [
             meta: ['编辑', '比赛分析'],
         },{
             path: '/replay',
+            name: 'replay',
             component: replay,
             meta: ['编辑', '复盘'],
         },{

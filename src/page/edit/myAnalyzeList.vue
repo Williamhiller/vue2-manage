@@ -34,44 +34,48 @@
             <div class="table_container">
                 <el-table
                     :data="tableData"
-                    highlight-current-row
-                    style="width: 100%">
+                    border
+                    style="width: 70%">
                     <el-table-column
                         type="index"
                         width="100">
                     </el-table-column>
                     <el-table-column
-                        property="registe_time"
-                        label="注册日期"
+                        property="match"
+                        label="联赛"
                         width="220">
                     </el-table-column>
                     <el-table-column
-                        property="username"
-                        label="用户姓名"
+                        property="round"
+                        label="轮次"
                         width="220">
                     </el-table-column>
                     <el-table-column
-                        property="city"
-                        label="注册地址">
+                        property="homeName"
+                        label="主队">
+                    </el-table-column>
+                    <el-table-column
+                        property="guestName"
+                        label="客队">
+                    </el-table-column>
+                    <el-table-column
+                        property="code"
+                        label="编号">
+                    </el-table-column>
+                    <el-table-column
+                        label="操作">
+                        <template  slot-scope="scope">
+                            <el-button type="normal" size="mini" @click.native.prevent="goReplay(scope.row.code)">详情 {{scope.row.code}}</el-button>
+                        </template>
                     </el-table-column>
                 </el-table>
-                <div class="Pagination" style="text-align: left;margin-top: 10px;">
-                    <el-pagination
-                        @size-change="handleSizeChange"
-                        @current-change="handleCurrentChange"
-                        :current-page="currentPage"
-                        :page-size="20"
-                        layout="total, prev, pager, next"
-                        :total="count">
-                    </el-pagination>
-                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import { getCodeData,uploadAnalyze } from '@/api/getData'
+    import { getAnalyzeList } from '@/api/getData'
     import headTop from '../../components/headTop'
     import { quillEditor } from 'vue-quill-editor'
 
@@ -81,13 +85,7 @@
                 match : '',
                 round : '',
                 code : '',
-                tableData: [{
-                    registe_time: '2016-05-02',
-                    username: '王小虎',
-                    city: '上海市普陀区金沙江路 1518 弄'
-                }],
-                count: 0,
-                currentPage: 1,
+                tableData: []
             }
         },
     	components: {
@@ -99,39 +97,27 @@
         },
         methods: {
             async getList(){
-                if(this.code === '') {
-                    this.$message.warning('编号不能为空！');
-                    return;
-                }
-                if(this.content === '') {
-                    this.$message.warning('内容不能为空！');
-                    return;
-                }
-                let matchData = this.matchData
                 let params = {
                     match: this.match,
                     round: this.round,
-                    code: this.code,
-                    content: this.content,
-                    homeName : matchData.homeName,
-                    guestName : matchData.guestName,
-                    homeScore : matchData.homeScore,
-                    guestScore : matchData.guestScore,
-                    first : matchData.first,
-                    output: matchData.output,
-                    analyse: matchData.content
+                    code: this.code
                 };
 
-                const res = await uploadAnalyze(params);
+                const res = await getAnalyzeList(params);
                 if (res.data.code === 200) {
                     this.$message({
                         type: 'success',
-                        message: '添加成功'
+                        message: '查询成功'
                     });
-                    Object.assign(this.$data, this.$options.data.call(this));
+                    this.tableData = res.data.data;
+
                 }else{
-                    this.$message.error("添加失败");
+                    this.$message.error("查询失败");
                 }
+            },
+            goReplay (code) {
+                console.log(code)
+                this.$router.push( {name:"replay",params:{code:code}})
             }
         },
     }

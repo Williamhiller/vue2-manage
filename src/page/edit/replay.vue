@@ -47,12 +47,17 @@
     	components: {
     		headTop,
     	},
+        mounted () {
+            if(this.$route.params.code) {
+                this.code = this.$route.params.code
+                this.getAnalyzeData()
+            }
+        },
         computed: {
 
         },
         methods: {
             async getAnalyzeData(){
-
                 const res = await getAnalyzeByCode(this.code);
                 if (res.data.code === 200) {
                     this.analyseData = res.data.data;
