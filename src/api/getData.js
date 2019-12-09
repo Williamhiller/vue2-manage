@@ -1,4 +1,17 @@
 import Axios from '../config/axios';
+
+let parseParams = function (params) {
+    let queryAll = '';
+    for(let key in params) {
+        let queryItem = key + '=' + params[key];
+        if(params[key]) {
+            // 为空则前缀为？ 不为空则添加&
+            queryAll += (queryAll === '')? '?' : '&';
+            queryAll += queryItem;
+        }
+    }
+    return queryAll
+};
 /**
  * 登陆
  */
@@ -26,7 +39,7 @@ export const getCodeData = code => Axios.get(`/analyze/qiutan/${code}`);
 /**
  * 获取分析内容
  */
-export const getAnalyzeList = data => Axios.get(`/analyze/list`, data);
+export const getAnalyzeList = data => Axios.get(`/analyze/list` + parseParams(data));
 /**
  * 获取分析内容
  */

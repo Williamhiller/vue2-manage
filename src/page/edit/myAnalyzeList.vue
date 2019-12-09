@@ -65,7 +65,7 @@
                     <el-table-column
                         label="操作">
                         <template  slot-scope="scope">
-                            <el-button type="normal" size="mini" @click.native.prevent="goReplay(scope.row.code)">详情 {{scope.row.code}}</el-button>
+                            <el-button type="normal" size="mini" @click.native.prevent="goReplay(scope.row.code)">详情</el-button>
                         </template>
                     </el-table-column>
                 </el-table>

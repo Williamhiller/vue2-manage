@@ -24,7 +24,7 @@ module.exports = (app) => {
 
     })
     app.get('/analyze/list', async (req, res) => {
-        const _analyze = req.body;
+        const _analyze = req.query;
         let params = {};
         if(_analyze.code) {
             params.code = _analyze.code;
