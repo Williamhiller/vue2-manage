@@ -84,6 +84,8 @@ let writeFun = function (data, saveData) {
     output += `立博 ${saveData.L[0].toFixed(2)} ${saveData.L[1].toFixed(2)} ${saveData.L[2].toFixed(2)} >${saveData.L[3]}\n`;
 
     data.matchData.output = output;
+    data.matchData.homeScore = home[0];
+    data.matchData.guestScore = guest[0];
     // fs.writeFile(location+'analyze/gameAnalyze.txt',output,function(err){
     //     console.log("fs-write-success",err)
     // });

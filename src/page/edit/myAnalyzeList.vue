@@ -38,17 +38,17 @@
                     style="width: 70%">
                     <el-table-column
                         type="index"
-                        width="100">
+                        width="60">
                     </el-table-column>
                     <el-table-column
                         property="match"
                         label="联赛"
-                        width="220">
+                        width="100">
                     </el-table-column>
                     <el-table-column
                         property="round"
                         label="轮次"
-                        width="220">
+                        width="100">
                     </el-table-column>
                     <el-table-column
                         property="homeName"
@@ -116,7 +116,6 @@
                 }
             },
             goReplay (code) {
-                console.log(code)
                 this.$router.push( {name:"replay",params:{code:code}})
             }
         },

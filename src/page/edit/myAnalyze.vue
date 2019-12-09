@@ -119,14 +119,14 @@
     }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 	@import '../../style/mixin';
 	.edit_container{
 		padding: 40px;
 		margin-bottom: 40px;
 	}
 	.editer{
-		height: 350px;
+		height: 150px;
 	}
     .edit_title {
         margin-bottom: 10px;

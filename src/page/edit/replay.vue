@@ -28,24 +28,55 @@
                     <div v-html="analyseData.analyse"></div>
                 </el-collapse-item>
             </el-collapse>
+
+            <quill-editor v-model="replay"
+                          ref="myQuillEditor"
+                          class="editer"
+                          :options="editorOption">
+            </quill-editor>
+
+
         </div>
+
+        <el-row :gutter="20" style="padding: 10px 40px 80px">
+            <el-col :span="6">
+                <div class="edit_title">
+                    <el-input v-model="result" type="number" placeholder="赛果"></el-input>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="edit_title">
+                    <el-input v-model="score" placeholder="比分"></el-input>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="edit_title">
+                    <el-button type="primary" @click="uploadReplay">提交</el-button>
+                </div>
+            </el-col>
+        </el-row>
     </div>
 </template>
 
 <script>
-    import { getAnalyzeByCode } from '@/api/getData'
+    import { getAnalyzeByCode,uploadReplay } from '@/api/getData'
     import headTop from '../../components/headTop'
+    import { quillEditor } from 'vue-quill-editor'
 
     export default {
         data(){
             return {
                 code : '',
-                activeNames: [],
-                analyseData : {}
+                result: '',
+                score: '',
+                activeNames: ['1','2'],
+                replay: '',
+                analyseData : {},
+                editorOption: {}
             }
         },
     	components: {
-    		headTop,
+    		headTop,quillEditor
     	},
         mounted () {
             if(this.$route.params.code) {
@@ -54,7 +85,9 @@
             }
         },
         computed: {
-
+            editor() {
+                return this.$refs.myQuillEditor.quill
+            }
         },
         methods: {
             async getAnalyzeData(){
@@ -64,15 +97,42 @@
                 }else{
                     this.$message.error("获取数据失败");
                 }
+            },
+            async uploadReplay(){
+                let params = {
+                    code : this.code,
+                    replay : this.replay,
+                    result : this.result,
+                    score : this.score
+                };
+                const res = await uploadReplay(params);
+                if (res.data.code === 200) {
+                    this.$message({
+                        type: 'success',
+                        message: '保存成功'
+                    });
+                    Object.assign(this.$data, this.$options.data.call(this));
+                }else{
+                    this.$message.error("保存失败");
+                }
             }
         },
     }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 	@import '../../style/mixin';
     .edit_container{
         padding: 40px;
         margin-bottom: 40px;
+    }
+    .editer{
+        height: 150px;
+    }
+    .edit_title {
+        margin-bottom: 10px;
+    }
+    .submit_btn{
+        text-align: center;
     }
 </style>

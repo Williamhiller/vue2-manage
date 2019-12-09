@@ -106,4 +106,27 @@ module.exports = (app) => {
             })
         });
     })
+
+    app.post('/analyze/replay', async (req, res) => {
+        const _analyze = req.body;
+        let params = {
+            replay: _analyze.replay,
+            result: _analyze.result,
+            score: _analyze.score
+        };
+
+        Analyze.update({code : _analyze.code}, params,{upsert: true}, (idErr, as)  => {
+            if (idErr) {
+                res.json({
+                    code : 400,
+                    message : idErr
+                })
+                return
+            }
+            res.json({
+                code : 200,
+                message : '保存成功！'
+            })
+        });
+    })
 }

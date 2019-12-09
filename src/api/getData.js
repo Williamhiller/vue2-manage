@@ -49,6 +49,10 @@ export const getAnalyzeByCode = code => Axios.get(`/analyze/${code}`);
  */
 export const uploadAnalyze = data => Axios.post('/analyze/upload', data);
 /**
+ * 复盘
+ */
+export const uploadReplay = data => Axios.post('/analyze/replay', data);
+/**
  * api请求量
  */
 
