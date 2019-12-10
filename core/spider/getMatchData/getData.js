@@ -10,10 +10,14 @@ module.exports = async function (url) {
     let ph = await phantom.create();
     console.log(ph)
     let _page = await ph.createPage();
-    _page.setting('userAgent','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3440.75 Safari/537.36');
-
+    _page.settings.userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3440.75 Safari/537.36';
+    _page.settings.loadImages = false;
+    _page.onResourceRequested = function(requestData, request){
+        request.abort();
+        console.log(requestData.url + " aborted");
+    }
     try {
-        console.log(_page)
+        console.log(url)
         let status = await _page.open(url);
         console.log('status +++++++++++',status)
         let data = await _page.evaluate(function () {
@@ -35,7 +39,7 @@ module.exports = async function (url) {
         });
         deferred.resolve(data);
     }catch (e) {
-        console.log(e)
+        console.log('------------------',e)
         deferred.reject(e);
     }
 
