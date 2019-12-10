@@ -13,8 +13,8 @@ if (process.env.NODE_ENV == 'development') {
 	baseUrl = '';
     baseImgPath = 'static/img/';
 }else{
-	baseUrl = '//elm.cangdu.org';
-    baseImgPath = '//elm.cangdu.org/img/';
+	baseUrl = '';
+    baseImgPath = 'static/img/';
 }
 
 export {
