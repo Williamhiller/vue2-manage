@@ -7,7 +7,6 @@ module.exports = (app) => {
     //  获取比赛信息，分析时使用
     app.get('/analyze/qiutan/:id', async (req, res) => {
 
-        console.log(req.params.id)
         let data = await setAnalyze(req.params.id);
         if(data) {
             let matchData = data.matchData;
