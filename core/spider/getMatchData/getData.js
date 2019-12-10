@@ -3,25 +3,18 @@
  */
 let Q = require("q");
 let phantom = require('phantom');
-let _ph, _page;
 
-module.exports = function (url) {
+module.exports = async function (url) {
     let deferred = Q.defer();
-    let _url = url;
 
-    phantom.create().then(function (ph) {
-        _ph = ph;
-        return _ph.createPage();
-    }).then(function (page) {
-        _page = page;
-        _page.setting('userAgent','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3440.75 Safari/537.36');
+    let ph = await phantom.create();
+    let _page = await ph.createPage();
+    _page.setting('userAgent','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3440.75 Safari/537.36');
 
-        console.log(_url)
-        return _page.open(_url);
-    }).then(function (status) {
+    try {
+        let status = await _page.open(url);
         console.log(status)
-
-        return _page.evaluate(function () {
+        let data = await _page.evaluate(function () {
             var data = {};
 
             var matchData = {};
@@ -38,15 +31,10 @@ module.exports = function (url) {
 
             return data;
         });
-    }).then(function (data) {
         deferred.resolve(data);
-
-        _page.close();
-        _ph.exit(0);
-    }).catch(function (e) {
-        console.log(e)
+    }catch (e) {
         deferred.reject(e);
-    });
+    }
 
     return deferred.promise;
 };
