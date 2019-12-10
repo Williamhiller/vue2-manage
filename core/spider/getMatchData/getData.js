@@ -13,12 +13,10 @@ module.exports = async function (url) {
     _page.setting('userAgent','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3440.75 Safari/537.36');
     _page.setting('loadImages',false);
 
-    _page.onResourceRequested = function(requestData, request){
-        request.abort();
-        console.log(requestData.url + " aborted");
-    }
     try {
-        console.log(url)
+        for(let key in _page) {
+            console.log(key)
+        }
         let status = await _page.open(url);
         console.log('status +++++++++++',status)
         let data = await _page.evaluate(function () {
