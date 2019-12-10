@@ -6,8 +6,7 @@
                          background-color="#324057"
                          text-color="#fff"
                          active-text-color="#ffd04b"
-                         style="min-height: 100%;"
-                         theme="dark" router>
+                         style="min-height: 100%;" router>
 					<el-menu-item index="manage"><i class="el-icon-menu"></i>首页</el-menu-item>
 					<el-submenu index="2">
 						<template slot="title"><i class="el-icon-document"></i>数据管理</template>

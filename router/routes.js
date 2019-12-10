@@ -22,7 +22,7 @@ module.exports = (app) => {
                 "name": "admin",
                 "id": '001',
                 "role": "管理员",
-                "avatar": 'avatar.jpg'
+                "avatar": 'avatar.png'
             }
         })
     })

@@ -37,6 +37,10 @@ export const uploadArticle = data => Axios.post('/article/upload', data);
  */
 export const getCodeData = code => Axios.get(`/analyze/qiutan/${code}`);
 /**
+ * 删除分析
+ */
+export const deleteAnalyze = code => Axios.delete(`/analyze/delete/${code}`);
+/**
  * 获取分析内容
  */
 export const getAnalyzeList = data => Axios.get(`/analyze/list` + parseParams(data));

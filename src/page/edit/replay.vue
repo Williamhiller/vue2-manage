@@ -78,11 +78,16 @@
     	components: {
     		headTop,quillEditor
     	},
+        watch: {
+            $route() {
+                if (this.$route.name === 'replay') {
+                    this.code = this.$route.query.code;
+                    this.getAnalyzeData()
+                }
+             }
+        },
         mounted () {
-            if(this.$route.params.code) {
-                this.code = this.$route.params.code
-                this.getAnalyzeData()
-            }
+
         },
         computed: {
             editor() {

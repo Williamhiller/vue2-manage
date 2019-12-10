@@ -23,6 +23,25 @@ module.exports = (app) => {
         }
 
     })
+
+    app.delete('/analyze/delete/:id', async (req, res) => {
+        const code = req.params.id;
+
+        Analyze.findOneAndDelete({'code': code}, err => {
+            if(err) {
+                res.json({
+                    errno: 1,
+                    message: '删除失败'
+                })
+                return;
+            }
+            res.json({
+                code : 200,
+                message: '删除成功'
+            })
+        })
+    })
+
     app.get('/analyze/list', async (req, res) => {
         const _analyze = req.query;
         let params = {};

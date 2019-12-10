@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 const state = {
 	adminInfo: {
-		avatar: 'avatar.jpg'
+		avatar: 'avatar.png'
 	},
 }
 

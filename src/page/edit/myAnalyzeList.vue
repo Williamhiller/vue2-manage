@@ -35,7 +35,7 @@
                 <el-table
                     :data="tableData"
                     border
-                    style="width: 70%">
+                    style="width: 80%">
                     <el-table-column
                         type="index"
                         width="60">
@@ -65,7 +65,8 @@
                     <el-table-column
                         label="操作">
                         <template  slot-scope="scope">
-                            <el-button type="normal" size="mini" @click.native.prevent="goReplay(scope.row.code)">详情</el-button>
+                            <el-button size="mini" type="primary" plain icon="el-icon-edit" @click.native.prevent="goReplay(scope.row.code)"></el-button>
+                            <el-button size="mini" type="danger" plain icon="el-icon-delete" @click.native.prevent="deleteAnalyze(scope.row.code)"></el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -75,7 +76,7 @@
 </template>
 
 <script>
-    import { getAnalyzeList } from '@/api/getData'
+    import { getAnalyzeList, deleteAnalyze } from '@/api/getData'
     import headTop from '../../components/headTop'
     import { quillEditor } from 'vue-quill-editor'
 
@@ -116,7 +117,30 @@
                 }
             },
             goReplay (code) {
-                this.$router.push( {name:"replay",params:{code:code}})
+                this.$router.push( {path:"/replay", query:{code:code}})
+            },
+            async deleteAnalyze (code) {
+                this.$confirm('此操作将永久删除该文章, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(async () => {
+                    let res = await deleteAnalyze(code)
+                    if (res.data.code === 200) {
+                        this.$message({
+                            type: 'success',
+                            message: '删除成功'
+                        });
+                        this.getList();
+                    }else{
+                        this.$message.error("删除失败");
+                    }
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
             }
         },
     }
