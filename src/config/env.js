@@ -7,15 +7,15 @@
  *
  */
 let baseUrl = '';
-let baseImgPath;
+let baseImgPath = 'static/img/';
 
-if (process.env.NODE_ENV == 'development') {
-	baseUrl = '';
-    baseImgPath = 'static/img/';
-}else{
-	baseUrl = '';
-    baseImgPath = 'static/img/';
-}
+// if (process.env.NODE_ENV == 'development') {
+// 	baseUrl = '';
+//     baseImgPath = 'static/img/';
+// }else{
+// 	baseUrl = '';
+//     baseImgPath = 'static/img/';
+// }
 
 export {
 	baseUrl,
