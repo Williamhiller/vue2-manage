@@ -10,8 +10,9 @@ module.exports = async function (url) {
     let ph = await phantom.create();
     console.log(ph)
     let _page = await ph.createPage();
-    _page.settings.userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3440.75 Safari/537.36';
-    _page.settings.loadImages = false;
+    _page.setting('userAgent','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3440.75 Safari/537.36');
+    _page.setting('loadImages',false);
+
     _page.onResourceRequested = function(requestData, request){
         request.abort();
         console.log(requestData.url + " aborted");
