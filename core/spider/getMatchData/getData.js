@@ -33,7 +33,6 @@ module.exports = async function (url) {
         });
         page.close();
         ph.exit(0);
-        console.log(data)
         deferred.resolve(data);
     }catch (e) {
         console.log('------------------',e)
