@@ -8,12 +8,14 @@ module.exports = async function (url) {
     let deferred = Q.defer();
 
     let ph = await phantom.create();
+    console.log(ph)
     let _page = await ph.createPage();
     _page.setting('userAgent','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3440.75 Safari/537.36');
 
     try {
+        console.log(_page)
         let status = await _page.open(url);
-        console.log(status)
+        console.log('status +++++++++++',status)
         let data = await _page.evaluate(function () {
             var data = {};
 
@@ -33,6 +35,7 @@ module.exports = async function (url) {
         });
         deferred.resolve(data);
     }catch (e) {
+        console.log(e)
         deferred.reject(e);
     }
 
