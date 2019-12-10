@@ -1,8 +1,8 @@
 
 const Ids = require('../models/id')
 const Article = require('../models/article')
-const setAnalyze = require('../core/calcLevels/setAnalyze')
 const pushRouter = require('./pushRouter')
+const analyzeRouter = require('./analyzeRouter')
 
 module.exports = (app) => {
     app.use((req, res, next) => {
@@ -13,6 +13,7 @@ module.exports = (app) => {
     })
 
     pushRouter(app)
+    analyzeRouter(app)
 
     app.get('/admin/info', (req, res) => {
         res.json({
@@ -21,7 +22,7 @@ module.exports = (app) => {
                 "name": "admin",
                 "id": '001',
                 "role": "管理员",
-                "avatar": 'avatar.jpg'
+                "avatar": 'avatar.png'
             }
         })
     })
@@ -67,34 +68,5 @@ module.exports = (app) => {
                 })
             })
         });
-    })
-
-    app.post('/analyze/upload', async (req, res) => {
-        const _analyze = req.body;
-
-        let data = await setAnalyze(_analyze.code);
-        let params = {
-            code: _analyze.code,
-            match: _analyze.match,
-            round : _analyze.round,
-            homeName : data.homeName,
-            guestName : data.guestName,
-            homeScore : data.homeScore,
-            guestScore : data.guestScore,
-            first : data.first,
-            // odd : Object,
-            analyse: _analyze.content
-        };
-        // setAnalyzeArticle(_article).then( ()=> {
-        //     res.json({
-        //         code : 200,
-        //         message : '登录成功！'
-        //     })
-        // }, error => {
-        //     res.json({
-        //         code : 400,
-        //         message : error
-        //     })
-        // })
     })
 };

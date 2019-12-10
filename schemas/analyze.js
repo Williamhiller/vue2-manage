@@ -13,6 +13,10 @@ var ArticleSchema = new mongoose.Schema({
     odd : Object,
     asian : String,
     analyse: String,
+    output: String,
+    replay: String,
+    result: Number,
+    score: String
 });
 
 ArticleSchema.statics = {
