@@ -1,7 +1,7 @@
 // a phantomjs example
 var page = require('webpage').create();
 phantom.outputEncoding="gbk";
-page.open("http://www.topfe.cn", function(status) {
+page.open("https://www.baidu.com/", function(status) {
     if ( status === "success" ) {
         console.log(page.title);
     } else {
