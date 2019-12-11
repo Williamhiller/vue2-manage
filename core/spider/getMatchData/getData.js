@@ -12,8 +12,7 @@ module.exports = async function (url) {
     page.setting('loadImages',false);
 
     try {
-        let status = await page.open(url);
-        console.log('status +++++++++++',status)
+        await page.open(url);
         let data = await page.evaluate(function () {
             var data = {};
 
@@ -35,7 +34,6 @@ module.exports = async function (url) {
         ph.exit(0);
         deferred.resolve(data);
     }catch (e) {
-        console.log('------------------',e)
         deferred.reject(e);
     }
 

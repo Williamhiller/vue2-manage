@@ -81,7 +81,7 @@ let startTimer = function (id,time, type) {
             pushMessageToApp(type);
         },time)
     }
-}
+};
 
 const parseList = function () {
     listGlobal.forEach(function (item) {
