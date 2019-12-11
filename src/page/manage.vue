@@ -18,6 +18,7 @@
 						<el-menu-item index="myAnalyze">比赛分析</el-menu-item>
 						<el-menu-item index="replay">复盘</el-menu-item>
 						<el-menu-item index="myAnalyzeList">比赛分析列表</el-menu-item>
+						<el-menu-item index="analyzeRules">规则</el-menu-item>
 					</el-submenu>
 					<el-submenu index="6">
 						<template slot="title"><i class="el-icon-setting"></i>设置</template>
