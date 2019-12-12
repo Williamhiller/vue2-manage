@@ -59,6 +59,10 @@
                         label="客队">
                     </el-table-column>
                     <el-table-column
+                        property="score"
+                        label="比分">
+                    </el-table-column>
+                    <el-table-column
                         property="code"
                         label="编号">
                     </el-table-column>

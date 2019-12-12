@@ -1,29 +1,45 @@
-var phantom = require('phantom');
 
-var sitepage = null;
-var phInstance = null;
-phantom.create()
-    .then(instance => {
-        phInstance = instance;
-        console.log(111111)
-        return instance.createPage();
-    })
-    .then(page => {
-        sitepage = page;
-        console.log(222222)
-        return page.open('https://www.baidu.com/');
-    })
-    .then(status => {
-        console.log(333333)
-        console.log(status);
-        return sitepage.property('content');
-    })
-    .then(content => {
-        console.log(content);
-        sitepage.close();
-        phInstance.exit();
-    })
-    .catch(error => {
-        console.log(error);
-        phInstance.exit();
+const puppeteer = require('puppeteer-core');
+// const iPhone = puppeteer.devices['iPhone 6'];
+// const findChrome = require('./node_modules/carlo/lib/find_chrome');
+
+
+(async () => {
+    // let findChromePath = await findChrome({});
+    // let executablePath = findChromePath.executablePath;
+    const browser = await puppeteer.launch({
+        headless: true,
+        defaultViewport: {
+            width: 1920,
+            height: 1080
+        },
+        executablePath : 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe'
     });
+    const page = await browser.newPage();
+    // await page.emulate(iPhone);
+    await page.goto('https://www.baidu.com/');
+    await page.evaluate(() => {
+
+    });
+    let x = 10;
+    x = await page.evaluate(() =>{
+        var test = document.querySelector('#su').value;// 联赛名称
+        return test
+    });
+    console.log(x)
+    // const divsCounts = await page.$$eval('#su', el => el.innerHTML);
+    // const elementHandle = await page.$('input#kw');
+    // setTimeout(async function () {
+    //     await elementHandle.type('input');
+    // },4000)
+    // setTimeout(async function () {
+    //     await elementHandle.type(' text');
+    // },5000)
+    // setTimeout(async function () {
+    //     await elementHandle.press('Enter');
+    // },6000)
+    // setTimeout(async function () {
+    //
+    // },10000)
+    browser.close()
+})();
