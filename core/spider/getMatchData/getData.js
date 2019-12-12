@@ -1,45 +1,50 @@
 /**
  * Created by Williamhiler on 2016/11/22.
  */
-let Q = require("q");
-let phantom = require('phantom');
-module.exports = async function (url) {
-    let deferred = Q.defer();
+const puppeteer = require('puppeteer-core');
+const findChrome = require('./node_modules/carlo/lib/find_chrome');
 
-    let ph = await phantom.create();
-    let page = await ph.createPage();
-    page.setting('userAgent','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3440.75 Safari/537.36');
-    page.setting('loadImages',false);
+module.exports = function (url) {
 
-    try {
-        let status = await page.open(url);
-        console.log('status +++++++++++',status)
-        let data = await page.evaluate(function () {
-            var data = {};
+    return new Promise(async (resolve, reject) =>{
+        try {
+            let findChromePath = await findChrome({});
+            let executablePath = findChromePath.executablePath;
+            const browser = await puppeteer.launch({
+                headless: true,
+                defaultViewport: {
+                    width: 1920,
+                    height: 1080
+                },
+                executablePath : executablePath
+            });
 
-            var matchData = {};
-            matchData.homeName = hometeam;
-            matchData.homeCode = h2h_home;
-            matchData.guestName = guestteam;
-            matchData.guestCode = h2h_away;
-            matchData.league = document.querySelector('.LName').innerHTML;// 联赛名称
-            matchData.homeData = h_data;
-            matchData.guestData = a_data;
-            matchData.historyData = v_data;
+            const page = await browser.newPage();
+            await page.goto(url);
 
-            data.matchData = matchData;
+            let data = await page.evaluate(() =>{
+                var data = {};
 
-            return data;
-        });
-        page.close();
-        ph.exit(0);
-        deferred.resolve(data);
-    }catch (e) {
-        console.log('------------------',e)
-        deferred.reject(e);
-    }
+                var matchData = {};
+                matchData.homeName = hometeam;
+                matchData.homeCode = h2h_home;
+                matchData.guestName = guestteam;
+                matchData.guestCode = h2h_away;
+                matchData.league = document.querySelector('.LName').innerHTML;// 联赛名称
+                matchData.homeData = h_data;
+                matchData.guestData = a_data;
+                matchData.historyData = v_data;
 
-    return deferred.promise;
+                data.matchData = matchData;
+
+                return data;
+            });
+
+            resolve(data);
+        }catch (e) {
+            reject(e)
+        }
+    });
 };
 
 

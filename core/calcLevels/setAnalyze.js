@@ -104,9 +104,7 @@ let start = async function (code) {
         W : [],
         L : []
     };
-    console.log(code)
     let data = await getData(`http://zq.win007.com/analysis/${code}cn.htm`);
-    console.log(data)
     // 获取欧赔数据
     let url = `http://op1.win007.com/oddslist/${code}.htm`;
     let oddData = await getOddData(url);

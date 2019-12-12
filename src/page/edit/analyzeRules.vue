@@ -3,30 +3,34 @@
         <head-top></head-top>
 
         <div class="edit_container">
+            <el-row :gutter="10">
+                <el-col :span="2">
+                    <el-input v-model="match" placeholder="联赛"></el-input>
+                </el-col>
+                <el-col :span="2">
+                    <el-input v-model="code" placeholder="球探编号"></el-input>
+                </el-col>
+                <el-col :span="4">
+                    <el-input v-model="code" placeholder="形势"></el-input>
+                </el-col>
+                <el-col :span="10">
+                    <el-input v-model="code" placeholder="策略"></el-input>
+                </el-col>
+                <el-col :span="2">
+                    <el-button type="primary" @click="getList">确定</el-button>
+                </el-col>
+            </el-row>
+            <el-divider></el-divider>
+
             <el-row :gutter="20">
-                <el-col :span="6">
-                    <div class="edit_title">
-                        <h3 class="">联赛</h3>
-                        <el-input v-model="match"></el-input>
-                    </div>
+                <el-col :span="4">
+                    <el-input v-model="match" placeholder="联赛"></el-input>
+                </el-col>
+                <el-col :span="4">
+                    <el-input v-model="code" placeholder="球探编号"></el-input>
                 </el-col>
                 <el-col :span="6">
-                    <div class="edit_title">
-                        <h3 class="">轮次</h3>
-                        <el-input v-model="round"></el-input>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="edit_title">
-                        <h3 class="">球探编号</h3>
-                        <el-input v-model="code"></el-input>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="edit_title">
-                        <h3 class="" style="color: #fff">查询</h3>
-                        <el-button type="primary" @click="getList">确定</el-button>
-                    </div>
+                    <el-button type="primary" @click="getList">确定</el-button>
                 </el-col>
             </el-row>
 
@@ -59,10 +63,6 @@
                         label="客队">
                     </el-table-column>
                     <el-table-column
-                        property="score"
-                        label="比分">
-                    </el-table-column>
-                    <el-table-column
                         property="code"
                         label="编号">
                     </el-table-column>
@@ -90,7 +90,12 @@
                 match : '',
                 round : '',
                 code : '',
-                tableData: []
+                tableData: [],
+                add: {
+                    match: '',
+                    code: '',
+
+                }
             }
         },
     	components: {
@@ -155,14 +160,5 @@
 	.edit_container{
 		padding: 40px;
 		margin-bottom: 40px;
-	}
-	.editer{
-		height: 350px;
-	}
-    .edit_title {
-        margin-bottom: 10px;
-    }
-	.submit_btn{
-		text-align: center;
 	}
 </style>

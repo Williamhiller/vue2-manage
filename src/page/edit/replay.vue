@@ -99,6 +99,7 @@
                 const res = await getAnalyzeByCode(this.code);
                 if (res.data.code === 200) {
                     this.analyseData = res.data.data;
+                    this.replay = this.analyseData.replay;
                 }else{
                     this.$message.error("获取数据失败");
                 }
