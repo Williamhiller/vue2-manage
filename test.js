@@ -17,6 +17,14 @@ const findChrome = require('./node_modules/carlo/lib/find_chrome');
         executablePath: executablePath
     });
     const page = await browser.newPage();
+    await page.setRequestInterception(true);
+    page.on('request', (request) => {
+        if (['image', 'stylesheet', 'font', 'script'].indexOf(request.resourceType()) !== -1) {
+            request.abort();
+        } else {
+            request.continue();
+        }
+    });
     // await page.emulate(iPhone);
     await page.goto('https://www.baidu.com/');
 
@@ -26,6 +34,8 @@ const findChrome = require('./node_modules/carlo/lib/find_chrome');
         return test
     });
     console.log(x)
+
+
     // const divsCounts = await page.$$eval('#su', el => el.innerHTML);
     // const elementHandle = await page.$('input#kw');
     // setTimeout(async function () {
@@ -39,6 +49,6 @@ const findChrome = require('./node_modules/carlo/lib/find_chrome');
     // },6000)
     setTimeout(async function () {
 
-        browser.close()
+        // browser.close()
     },10000)
 })();
