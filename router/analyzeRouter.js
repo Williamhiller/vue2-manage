@@ -84,7 +84,7 @@ module.exports = (app) => {
             analyse: _analyze.content
         };
 
-        Analyze.update({code : _analyze.code}, params,{upsert: true}, (idErr, as)  => {
+        Analyze.updateOne({code : _analyze.code}, params,{upsert: true}, (idErr, as)  => {
             if (idErr) {
                 res.json({
                     code : 400,
@@ -134,7 +134,7 @@ module.exports = (app) => {
             score: _analyze.score
         };
 
-        Analyze.update({code : _analyze.code}, params,{upsert: true}, (idErr, as)  => {
+        Analyze.updateOne({code : _analyze.code}, params,{upsert: true}, (idErr, as)  => {
             if (idErr) {
                 res.json({
                     code : 400,
