@@ -13,20 +13,17 @@ const puppeteer = require('puppeteer-core');
             width: 1920,
             height: 1080
         },
-        executablePath : 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe'
+        executablePath : 'C:\\Users\\Administrator\\AppData\\Local\\Google\\Chrome\\Application'
     });
     const page = await browser.newPage();
     // await page.emulate(iPhone);
     await page.goto('https://www.baidu.com/');
-    await page.evaluate(() => {
 
-    });
     let x = 10;
     x = await page.evaluate(() =>{
         var test = document.querySelector('#su').value;// 联赛名称
         return test
     });
-    console.log(x)
     // const divsCounts = await page.$$eval('#su', el => el.innerHTML);
     // const elementHandle = await page.$('input#kw');
     // setTimeout(async function () {
