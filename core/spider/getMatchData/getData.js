@@ -2,7 +2,7 @@
  * Created by Williamhiler on 2016/11/22.
  */
 const puppeteer = require('puppeteer-core');
-const findChrome = require('./node_modules/carlo/lib/find_chrome');
+const findChrome = require('../../../node_modules/carlo/lib/find_chrome');
 
 module.exports = function (url) {
 
@@ -39,7 +39,8 @@ module.exports = function (url) {
 
                 return data;
             });
-
+            await page.close();
+            await browser.close();
             resolve(data);
         }catch (e) {
             reject(e)

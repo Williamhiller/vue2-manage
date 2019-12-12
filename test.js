@@ -1,19 +1,20 @@
 
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-core');
 // const iPhone = puppeteer.devices['iPhone 6'];
-// const findChrome = require('./node_modules/carlo/lib/find_chrome');
+const findChrome = require('./node_modules/carlo/lib/find_chrome');
 
 
 (async () => {
-    // let findChromePath = await findChrome({});
-    // let executablePath = findChromePath.executablePath;
+    let findChromePath = await findChrome({});
+    let executablePath = findChromePath.executablePath;
     // console.log(executablePath)
     const browser = await puppeteer.launch({
-        headless: true,
+        headless: false,
         defaultViewport: {
             width: 1920,
             height: 1080
-        }
+        },
+        executablePath: executablePath
     });
     const page = await browser.newPage();
     // await page.emulate(iPhone);
@@ -36,8 +37,8 @@ const puppeteer = require('puppeteer');
     // setTimeout(async function () {
     //     await elementHandle.press('Enter');
     // },6000)
-    // setTimeout(async function () {
-    //
-    // },10000)
-    browser.close()
+    setTimeout(async function () {
+
+        browser.close()
+    },10000)
 })();
