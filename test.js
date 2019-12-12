@@ -24,6 +24,7 @@ const puppeteer = require('puppeteer-core');
         var test = document.querySelector('#su').value;// 联赛名称
         return test
     });
+    console.log(x)
     // const divsCounts = await page.$$eval('#su', el => el.innerHTML);
     // const elementHandle = await page.$('input#kw');
     // setTimeout(async function () {
