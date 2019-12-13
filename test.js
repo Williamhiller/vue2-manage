@@ -1,8 +1,6 @@
 
 const puppeteer = require('puppeteer-core');
-// const iPhone = puppeteer.devices['iPhone 6'];
 const findChrome = require('./node_modules/carlo/lib/find_chrome');
-
 
 (async () => {
     let findChromePath = await findChrome({});
@@ -16,6 +14,7 @@ const findChrome = require('./node_modules/carlo/lib/find_chrome');
         },
         executablePath: executablePath
     });
+
     const page = await browser.newPage();
     await page.setRequestInterception(true);
     page.on('request', (request) => {
@@ -26,24 +25,16 @@ const findChrome = require('./node_modules/carlo/lib/find_chrome');
         }
     });
     // await page.emulate(iPhone);
-    await page.goto('https://www.baidu.com/');
+    await page.goto('https://www.ixiupet.com/zixun/');
 
-    let x = 10;
-    x = await page.evaluate(() =>{
-        var test = document.querySelector('#su').value;// 联赛名称
-        return test
-    });
-    console.log(x)
-
-
-    // const divsCounts = await page.$$eval('#su', el => el.innerHTML);
-    // const elementHandle = await page.$('input#kw');
-    // setTimeout(async function () {
-    //     await elementHandle.type('input');
-    // },4000)
-    // setTimeout(async function () {
-    //     await elementHandle.type(' text');
-    // },5000)
+    const elementInput = await page.$('input#kw');
+    const elementBtn = await page.$('#su');
+    setTimeout(async function () {
+        await elementInput.type('test');
+    },4000);
+    setTimeout(async function () {
+        elementBtn.click()
+    },5000);
     // setTimeout(async function () {
     //     await elementHandle.press('Enter');
     // },6000)
