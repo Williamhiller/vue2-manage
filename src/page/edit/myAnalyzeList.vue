@@ -35,7 +35,7 @@
                 <el-table
                     :data="tableData"
                     border
-                    style="width: 80%">
+                    style="width: 100%">
                     <el-table-column
                         type="index"
                         width="60">

@@ -10,6 +10,7 @@ const userList = r => require.ensure([], () => r(require('@/page/data/userList')
 const vueEdit = r => require.ensure([], () => r(require('@/page/edit/vueEdit')), 'vueEdit');
 const myAnalyze = r => require.ensure([], () => r(require('@/page/edit/myAnalyze')), 'myAnalyze');
 const myAnalyzeList = r => require.ensure([], () => r(require('@/page/edit/myAnalyzeList')), 'myAnalyzeList');
+const matchList = r => require.ensure([], () => r(require('@/page/data/matchList')), 'matchList');
 const analyzeRules = r => require.ensure([], () => r(require('@/page/edit/analyzeRules')), 'analyzeRules');
 const replay = r => require.ensure([], () => r(require('@/page/edit/replay')), 'replay');
 const explain = r => require.ensure([], () => r(require('@/page/more/explain')), 'explain');
@@ -48,11 +49,15 @@ const routes = [
         },{
             path: '/myAnalyzeList',
             component: myAnalyzeList,
-            meta: ['编辑', '比赛分析列表'],
+            meta: ['数据管理', '分析列表'],
+        },{
+            path: '/matchList',
+            component: matchList,
+            meta: ['数据管理', '比赛列表'],
         },{
             path: '/analyzeRules',
             component: analyzeRules,
-            meta: ['编辑', '分析规则'],
+            meta: ['数据管理', '分析规则'],
         },{
 			path: '/explain',
 			component: explain,

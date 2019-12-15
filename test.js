@@ -1,45 +1,55 @@
 
 const puppeteer = require('puppeteer-core');
+// const iPhone = puppeteer.devices['iPhone 6'];
 const findChrome = require('./node_modules/carlo/lib/find_chrome');
+
 
 (async () => {
     let findChromePath = await findChrome({});
     let executablePath = findChromePath.executablePath;
     // console.log(executablePath)
     const browser = await puppeteer.launch({
-        headless: false,
+        headless: true,
         defaultViewport: {
-            width: 1920,
+            width: 1020,
             height: 1080
         },
         executablePath: executablePath
     });
-
     const page = await browser.newPage();
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        if (['image', 'stylesheet', 'font', 'script'].indexOf(request.resourceType()) !== -1) {
-            request.abort();
-        } else {
-            request.continue();
-        }
-    });
+    // await page.setRequestInterception(true);
+    // page.on('request', (request) => {
+    //     if (['image', 'stylesheet', 'font'].indexOf(request.resourceType()) !== -1) {
+    //         request.abort();
+    //     } else {
+    //         request.continue();
+    //     }
+    // });
     // await page.emulate(iPhone);
-    await page.goto('https://www.ixiupet.com/zixun/');
+    await page.goto('http://live.win007.com/indexall.aspx');
 
-    const elementInput = await page.$('input#kw');
-    const elementBtn = await page.$('#su');
-    setTimeout(async function () {
-        await elementInput.type('test');
-    },4000);
-    setTimeout(async function () {
-        elementBtn.click()
-    },5000);
-    // setTimeout(async function () {
-    //     await elementHandle.press('Enter');
-    // },6000)
-    setTimeout(async function () {
+    await page.waitForSelector('#table_live');
+    let matchList = await page.evaluate(() =>{
+        var list = [];
+        var trs = document.querySelectorAll('#table_live tr');
 
-        // browser.close()
-    },10000)
+        for(var i=0; i< trs.length; i++) {
+            var tr = trs[i];
+            var id = tr.id;
+            var code = id.split('_')[1];
+            if(id.includes('tr1') && code !== '0') {
+                var tds = tr.querySelectorAll('td');
+                list.push({
+                    code: code,
+                    match: tds[1].innerText,
+                    homeTeam : tds[4].querySelectorAll('a')[2].innerText,
+                    guestTeam : tds[6].querySelectorAll('a')[0].innerText
+                })
+            }
+        }
+
+        return list
+    });
+    console.log(matchList)
+
 })();

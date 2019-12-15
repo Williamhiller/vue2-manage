@@ -12,6 +12,7 @@ var logger = require('./server_modules/log.js').logger;
 
 // 数据库
 var mongoose = require('./server_modules/mongodb.js');
+var browser = require('./core/spider/getMatchData/browser');
 
 // 服务启动
 var app = express();
@@ -43,7 +44,7 @@ if ('development' === app.get('env')) {
   // app.use(morgan(':method :url :status'))
   app.use(log4js.connectLogger(logger, {level:log4js.levels.INFO}))
   app.locals.pretty = true
-  mongoose.set('debug', true)
+  // mongoose.set('debug', true)
 }
 
 app.listen(port);

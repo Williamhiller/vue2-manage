@@ -45,6 +45,10 @@ export const deleteAnalyze = code => Axios.delete(`/analyze/delete/${code}`);
  */
 export const getAnalyzeList = data => Axios.get(`/analyze/list` + parseParams(data));
 /**
+ * 获取比赛列表
+ */
+export const getMatchList = () => Axios.get(`/match/list`);
+/**
  * 获取分析内容
  */
 export const getAnalyzeByCode = code => Axios.get(`/analyze/${code}`);

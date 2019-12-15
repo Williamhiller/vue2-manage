@@ -11,7 +11,8 @@
 					<el-submenu index="2">
 						<template slot="title"><i class="el-icon-document"></i>数据管理</template>
 <!--						<el-menu-item index="userList">用户列表</el-menu-item>-->
-                        <el-menu-item index="myAnalyzeList">比赛分析列表</el-menu-item>
+                        <el-menu-item index="matchList">比赛列表</el-menu-item>
+                        <el-menu-item index="myAnalyzeList">分析列表</el-menu-item>
                         <el-menu-item index="analyzeRules">规则</el-menu-item>
 					</el-submenu>
 					<el-submenu index="5">

@@ -1,9 +1,27 @@
 
 
 const Analyze = require('../models/analyze')
-const setAnalyze = require('../core/calcLevels/setAnalyze')
+const setAnalyze = require('../core/calcLevels/setAnalyze');
+const getMatchList = require('../core/spider/getMatchData/getJingcaiList')
 module.exports = (app) => {
 
+    //  获取比赛列表
+    app.get('/match/list', async (req, res) => {
+
+        let data = await getMatchList();
+        if(data) {
+            res.json({
+                code : 200,
+                data : data
+            })
+        }else {
+            res.json({
+                code : 400,
+                message : '获取数据失败'
+            })
+        }
+
+    })
     //  获取比赛信息，分析时使用
     app.get('/analyze/qiutan/:id', async (req, res) => {
 
