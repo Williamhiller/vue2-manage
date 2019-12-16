@@ -7,7 +7,14 @@
                 <el-col :span="6">
                     <div class="edit_title">
                         <h3 class="">联赛</h3>
-                        <el-input v-model="match"></el-input>
+                        <el-select v-model="match" filterable placeholder="请选择">
+                            <el-option
+                                v-for="item in options"
+                                :key="item"
+                                :label="item"
+                                :value="item">
+                            </el-option>
+                        </el-select>
                     </div>
                 </el-col>
                 <el-col :span="6">
@@ -90,7 +97,16 @@
                 match : '',
                 round : '',
                 code : '',
-                tableData: []
+                tableData: [],
+                options: [
+                    '西甲',
+                    '意甲',
+                    '英超',
+                    '英冠',
+                    '德甲',
+                    '欧冠',
+                    '法乙',
+                ],
             }
         },
     	components: {

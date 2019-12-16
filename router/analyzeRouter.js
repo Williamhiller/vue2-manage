@@ -73,7 +73,7 @@ module.exports = (app) => {
             params.round = _analyze.round;
         }
 
-        Analyze.find(params, (idErr, list)  => {
+        Analyze.find(params).sort({_id:-1}).exec((idErr, list)  => {
             if (idErr) {
                 res.json({
                     code : 400,
