@@ -60,22 +60,23 @@ export const uploadAnalyze = data => Axios.post('/analyze/upload', data);
  * 复盘
  */
 export const uploadReplay = data => Axios.post('/analyze/replay', data);
-/**
- * api请求量
- */
-
-export const apiCount = data => Axios.get('/statis/api/' + data + '/count');
 
 /**
- * 获取用户列表
+ * 获取位置列表
  */
-
-export const getUserList = data => Axios.get('/v1/users/list', data);
+export const getPositionList = (data) => Axios.get('/position' + parseParams(data));
+/**
+ * 添加联赛位置
+ */
+export const addPosition = (params) => Axios.post(`/position`,params);
+/**
+ * 删除位置
+ */
+export const deletePosition = (id) => Axios.delete(`/position/${id}`);
 
 /**
  * 获取推送信息
  */
-
 export const getPushList = () => Axios.get('/push/list',);
 
 /**

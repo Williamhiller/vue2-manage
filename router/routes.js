@@ -3,6 +3,7 @@ const Ids = require('../models/id')
 const Article = require('../models/article')
 const pushRouter = require('./pushRouter')
 const analyzeRouter = require('./analyzeRouter')
+const positionRouter = require('./positionRouter')
 
 module.exports = (app) => {
     app.use((req, res, next) => {
@@ -14,6 +15,7 @@ module.exports = (app) => {
 
     pushRouter(app)
     analyzeRouter(app)
+    positionRouter(app)
 
     app.get('/admin/info', (req, res) => {
         res.json({

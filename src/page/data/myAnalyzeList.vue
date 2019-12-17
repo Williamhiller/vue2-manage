@@ -9,7 +9,7 @@
                         <h3 class="">联赛</h3>
                         <el-select v-model="match" filterable placeholder="请选择">
                             <el-option
-                                v-for="item in options"
+                                v-for="item in normalOptions"
                                 :key="item"
                                 :label="item"
                                 :value="item">
@@ -50,6 +50,8 @@
                     <el-table-column
                         property="match"
                         label="联赛"
+                        :filters="options"
+                        :filter-method="filterMatch"
                         width="100">
                     </el-table-column>
                     <el-table-column
@@ -89,7 +91,6 @@
 <script>
     import { getAnalyzeList, deleteAnalyze } from '@/api/getData'
     import headTop from '../../components/headTop'
-    import { quillEditor } from 'vue-quill-editor'
 
     export default {
         data(){
@@ -98,25 +99,20 @@
                 round : '',
                 code : '',
                 tableData: [],
-                options: [
-                    '西甲',
-                    '意甲',
-                    '英超',
-                    '英冠',
-                    '德甲',
-                    '欧冠',
-                    '法乙',
-                ],
+                options: [],
+                normalOptions: ['西甲', '意甲', '英超', '英冠', '德甲', '欧冠']
             }
         },
     	components: {
-    		headTop,
-    		quillEditor,
+    		headTop
     	},
         computed: {
 
         },
         methods: {
+            filterMatch(value, row) {
+                return row.match === value;
+            },
             async getList(){
                 let params = {
                     match: this.match,
@@ -131,7 +127,16 @@
                         message: '查询成功'
                     });
                     this.tableData = res.data.data;
-
+                    let arr = [], options = [];
+                    this.tableData.forEach((item) => {
+                        if(!arr.includes(item.match)) {
+                            options.push({
+                                text: item.match, value: item.match
+                            });
+                            arr.push(item.match)
+                        }
+                    });
+                    this.options = options;
                 }else{
                     this.$message.error("查询失败");
                 }

@@ -14,6 +14,7 @@
                         <el-menu-item index="matchList">比赛列表</el-menu-item>
                         <el-menu-item index="myAnalyzeList">分析列表</el-menu-item>
                         <el-menu-item index="analyzeRules">规则</el-menu-item>
+                        <el-menu-item index="positions">位置信息</el-menu-item>
 					</el-submenu>
 					<el-submenu index="5">
 						<template slot="title"><i class="el-icon-edit"></i>编辑</template>
