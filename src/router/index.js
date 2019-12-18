@@ -6,12 +6,12 @@ Vue.use(Router)
 const login = r => require.ensure([], () => r(require('@/page/login')), 'login');
 const manage = r => require.ensure([], () => r(require('@/page/manage')), 'manage');
 const home = r => require.ensure([], () => r(require('@/page/home')), 'home');
-const userList = r => require.ensure([], () => r(require('@/page/data/userList')), 'userList');
 const vueEdit = r => require.ensure([], () => r(require('@/page/edit/vueEdit')), 'vueEdit');
 const myAnalyze = r => require.ensure([], () => r(require('@/page/edit/myAnalyze')), 'myAnalyze');
-const myAnalyzeList = r => require.ensure([], () => r(require('@/page/edit/myAnalyzeList')), 'myAnalyzeList');
+const myAnalyzeList = r => require.ensure([], () => r(require('@/page/data/myAnalyzeList')), 'myAnalyzeList');
 const matchList = r => require.ensure([], () => r(require('@/page/data/matchList')), 'matchList');
-const analyzeRules = r => require.ensure([], () => r(require('@/page/edit/analyzeRules')), 'analyzeRules');
+const analyzeRules = r => require.ensure([], () => r(require('@/page/data/analyzeRules')), 'analyzeRules');
+const positions = r => require.ensure([], () => r(require('@/page/data/positions')), 'positions');
 const replay = r => require.ensure([], () => r(require('@/page/edit/replay')), 'replay');
 const explain = r => require.ensure([], () => r(require('@/page/more/explain')), 'explain');
 const push = r => require.ensure([], () => r(require('@/page/setting/push')), 'push');
@@ -29,10 +29,6 @@ const routes = [
 			path: '',
 			component: home,
 			meta: [],
-		},{
-			path: '/userList',
-			component: userList,
-			meta: ['数据管理', '用户列表'],
 		},{
 			path: '/vueEdit',
 			component: vueEdit,
@@ -58,6 +54,10 @@ const routes = [
             path: '/analyzeRules',
             component: analyzeRules,
             meta: ['数据管理', '分析规则'],
+        },{
+            path: '/positions',
+            component: positions,
+            meta: ['数据管理', '基础位置'],
         },{
 			path: '/explain',
 			component: explain,

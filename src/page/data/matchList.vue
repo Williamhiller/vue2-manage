@@ -6,12 +6,6 @@
             <el-row :gutter="20">
                 <el-col :span="6">
                     <div class="edit_title">
-                        <h3 class="">联赛</h3>
-                        <el-input v-model="match" @keyup.13.native="filterMatch"></el-input>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="edit_title">
                         <h3 class="" style="color: #fff">查询</h3>
                         <el-button type="primary" @click="getList">确定</el-button>
                     </div>
@@ -31,6 +25,8 @@
                     <el-table-column
                         property="match"
                         label="联赛"
+                        :filters="options"
+                        :filter-method="filterMatch"
                         width="100">
                     </el-table-column>
                     <el-table-column
@@ -64,7 +60,7 @@
             return {
                 match: '',
                 tableData: [],
-                dataAll: []
+                options: []
             }
         },
     	components: {
@@ -75,10 +71,8 @@
         },
 
         methods: {
-            filterMatch : function () {
-                this.tableData = this.dataAll.filter((item) => {
-                    return this.match ? item.match === this.match : item;
-                })
+            filterMatch(value, row) {
+                return row.match === value;
             },
             async getList(){
                 let params = {
@@ -93,8 +87,17 @@
                         type: 'success',
                         message: '查询成功'
                     });
-                    this.dataAll = res.data.data;
-                    this.filterMatch();
+                    this.tableData = res.data.data;
+                    let arr = [], options = [];
+                    this.tableData.forEach((item) => {
+                        if(!arr.includes(item.match)) {
+                            options.push({
+                                text: item.match, value: item.match
+                            });
+                            arr.push(item.match)
+                        }
+                    });
+                    this.options = options;
                 }else{
                     this.$message.error("查询失败");
                 }
