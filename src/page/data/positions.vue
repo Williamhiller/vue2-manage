@@ -43,6 +43,8 @@
                     <el-table-column
                         property="match"
                         label="联赛"
+                        :filters="options"
+                        :filter-method="filterMatch"
                         width="100">
                     </el-table-column>
                     <el-table-column
@@ -81,7 +83,8 @@
             return {
                 match: '',
                 tableData: [],
-                add: {}
+                add: {},
+                options: []
             }
         },
     	components: {
@@ -89,6 +92,9 @@
     	},
         computed: {},
         methods: {
+            filterMatch(value, row) {
+                return row.match === value;
+            },
             async addList(){
                 const res = await addPosition(this.add);
                 if (res.data.code === 200) {
@@ -113,6 +119,17 @@
                         message: '查询成功'
                     });
                     this.tableData = res.data.data;
+
+                    let arr = [], options = [];
+                    this.tableData.forEach((item) => {
+                        if(!arr.includes(item.match)) {
+                            options.push({
+                                text: item.match, value: item.match
+                            });
+                            arr.push(item.match)
+                        }
+                    });
+                    this.options = options;
                 }else{
                     this.$message.error("查询失败");
                 }
