@@ -57,7 +57,6 @@ const pushMessageToApp = function(type) {
       console.log(res)
     });
 };
-pushMessageToApp("喝水")
 
 let scheduler, hasStart = false;
 let listGlobal = [];

@@ -88,7 +88,7 @@
                         message: '查询成功'
                     });
                     this.tableData = res.data.data;
-                    let arr = [], options = [];
+                    let arr = [], options = [], assianOptions = [];
                     this.tableData.forEach((item) => {
                         if(!arr.includes(item.match)) {
                             options.push({

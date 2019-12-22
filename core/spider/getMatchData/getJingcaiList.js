@@ -33,9 +33,7 @@ module.exports = function () {
                     if(!vs) {
                         continue;
                     }
-                    if(!vs.innerText.includes('平')) {
-                        continue;
-                    }
+
                     if(tds[3].innerText) {
                         continue;
                     }
