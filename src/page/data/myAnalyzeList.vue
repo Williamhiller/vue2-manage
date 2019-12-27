@@ -100,7 +100,7 @@
                 code : '',
                 tableData: [],
                 options: [],
-                normalOptions: ['西甲', '意甲', '英超', '英冠', '德甲', '欧冠']
+                normalOptions: ['全部','西甲', '意甲', '英超', '英冠', '德甲', '欧冠']
             }
         },
     	components: {
@@ -115,7 +115,7 @@
             },
             async getList(){
                 let params = {
-                    match: this.match,
+                    match: this.match === '全部' ? '' : this.match,
                     round: this.round,
                     code: this.code
                 };
