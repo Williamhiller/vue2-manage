@@ -73,7 +73,30 @@ export const addPosition = (params) => Axios.post(`/position`,params);
  * 删除位置
  */
 export const deletePosition = (id) => Axios.delete(`/position/${id}`);
-
+/**
+ * 添加联赛位置
+ */
+export const getTacticsList = () => Axios.get(`/tactics/list`);
+/**
+ * 添加规则
+ */
+export const addTactics = (params) => Axios.post(`/tactics`,params);
+/**
+ * 添加规则
+ */
+export const deleteTactics = (id) => Axios.delete(`/tactics/${id}`);
+/**
+ * 获取策略比赛列表
+ */
+export const getTacticsMatchList = (tacticId) => Axios.get(`/tactics/match/${tacticId}`);
+/**
+ * 添加规则比赛
+ */
+export const addTacticsMatch = (params) => Axios.post(`/tactics/match`,params);
+/**
+ * 添加规则
+ */
+export const deleteTacticsMatch = (id) => Axios.delete(`/tactics/match/${id}`);
 /**
  * 获取推送信息
  */
