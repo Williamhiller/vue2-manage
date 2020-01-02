@@ -41,7 +41,8 @@ module.exports = (async function () {
 
                    data.game = window.game;
                    data.hash = window.hsDetail._hash;
-                   var oddset = document.getElementById('oddstr_370');
+                   // oddstr_115 威廉 370 oddset
+                   var oddset = document.getElementById('oddstr_115');
                    var tds = oddset.querySelectorAll('td');
                    var strArr = tds[3].getAttribute('onclick').split('\'');
 
@@ -69,7 +70,8 @@ module.exports = (async function () {
                         data.push([
                             tds[0].innerText,
                             tds[1].innerText,
-                            tds[2].innerText
+                            tds[2].innerText,
+                            tds[6].innerText
                         ])
                     });
 
