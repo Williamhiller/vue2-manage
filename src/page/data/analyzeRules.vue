@@ -4,6 +4,12 @@
 
         <div class="edit_container">
             <el-row :gutter="10">
+                <el-col :span="2">
+                    <el-input type="textarea" v-model="add.result" placeholder="赛果"></el-input>
+                </el-col>
+                <el-col :span="2">
+                    <el-input type="textarea" v-model="add.area" placeholder="区间"></el-input>
+                </el-col>
                 <el-col :span="6">
                     <el-input type="textarea" v-model="add.situation" placeholder="形势"></el-input>
                 </el-col>
@@ -27,7 +33,7 @@
                     <el-input v-model="tacticsAdd.odd" placeholder="赔率"></el-input>
                 </el-col>
                 <el-col :span="4">
-                    <el-input v-model="tacticsAdd.result" placeholder="赛果"></el-input>
+                    <el-input v-model="tacticsAdd.score" placeholder="比分"></el-input>
                 </el-col>
                 <el-col :span="6">
                     <el-button type="primary" @click="addTacticsMatch">确定</el-button>
@@ -46,6 +52,10 @@
                             style="width: 100%">
                             <el-table-column
                                 type="index">
+                            </el-table-column>
+                            <el-table-column
+                                property="result"
+                                label="赛果">
                             </el-table-column>
                             <el-table-column
                                 property="situation"
@@ -85,7 +95,7 @@
                                 label="赔率">
                             </el-table-column>
                             <el-table-column
-                                property="result"
+                                property="score"
                                 label="赛果">
                             </el-table-column>
                             <el-table-column
@@ -115,9 +125,11 @@
                     match: '',
                     code: '',
                     odd: '',
-                    result: ''
+                    score: ''
                 },
                 add: {
+                    result: '',
+                    area: '',
                     tactics: '',
                     situation: ''
                 },
@@ -144,6 +156,8 @@
             },
             async setTactics() {
                 let params = {
+                    result: this.add.result,
+                    area: this.add.area,
                     tactics: this.add.tactics,
                     situation: this.add.situation
                 };
@@ -168,6 +182,7 @@
             },
             async getTacticsMatch(row) {
                 this.activeRow = row;
+                console.log(row)
                 let tacticId = row._id;
                 let res = await getTacticsMatchList(tacticId);
                 if (res) {
@@ -181,6 +196,7 @@
 
                 const res = await addTacticsMatch(params);
                 if (res.data.code === 200) {
+                    this.getTacticsMatch(this.activeRow);
                     this.$message.success('添加成功');
                 } else {
                     this.$message.error("添加失败");
@@ -189,7 +205,6 @@
             async deleteTacticsMatch(id) {
                 const res = await deleteTacticsMatch(id);
                 if (res.data.code === 200) {
-                    this.getTacticsMatch(this.activeRow);
                     this.$message.success('删除成功');
                 } else {
                     this.$message.error("删除失败");

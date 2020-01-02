@@ -5,7 +5,7 @@ var TacticMatchSchema = new mongoose.Schema({
     code: String,
     match: String,
     odd: String,
-    result: String
+    score: String
 });
 
 module.exports = TacticMatchSchema;
