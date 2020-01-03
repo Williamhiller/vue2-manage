@@ -51,9 +51,12 @@
                             border
                             style="width: 100%">
                             <el-table-column
-                                type="index">
+                                width="60"
+                                property="area"
+                                label="区间">
                             </el-table-column>
                             <el-table-column
+                                width="60"
                                 property="result"
                                 label="赛果">
                             </el-table-column>
@@ -66,6 +69,7 @@
                                 label="策略">
                             </el-table-column>
                             <el-table-column
+                                width="80"
                                 label="操作">
                                 <template  slot-scope="scope">
                                     <el-button size="mini" type="danger" plain icon="el-icon-delete" @click.native.prevent="deleteTactics(scope.row._id)"></el-button>
@@ -78,10 +82,6 @@
                             :data="tacticsMatch"
                             border
                             style="width: 100%">
-                            <el-table-column
-                                type="index"
-                                width="60">
-                            </el-table-column>
                             <el-table-column
                                 property="code"
                                 label="代码">
