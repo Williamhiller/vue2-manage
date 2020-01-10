@@ -51,8 +51,10 @@
                             border
                             style="width: 100%">
                             <el-table-column
-                                width="60"
+                                width="80"
                                 property="area"
+                                :filters="options"
+                                :filter-method="filterArea"
                                 label="区间">
                             </el-table-column>
                             <el-table-column
@@ -119,6 +121,7 @@
     export default {
         data(){
             return {
+                options : [{text: "-1", value: "-1"},{text: "0", value: "0"},{text: "1", value: "1"},{text: "1.5", value: "1.5"},{text: "2", value: "2"}],
                 tacticsList: [],
                 tacticsMatch: [],
                 tacticsAdd: {
@@ -145,6 +148,9 @@
         computed: {
         },
         methods: {
+            filterArea(value, row) {
+                return row.area === value;
+            },
             async getTactics() {
                 const res = await getTacticsList();
                 if (res.data.code === 200) {
