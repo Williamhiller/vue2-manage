@@ -1,6 +1,6 @@
 
 let fs = require("fs");
-let location = "./static_temp/";
+let location = "../../static_temp/";
 
 (async function f() {
     let list = await fs.readFileSync(location+'En.json',"utf-8");
@@ -25,12 +25,18 @@ let location = "./static_temp/";
             return parseFloat(a[0]) - parseFloat(b[0])
         }
     });
+    let t = 0, num = 0;
     list.forEach((item) => {
-        if(item[0] && Number.parseFloat(item[0]) > 2) {
+        if(item[0] && Number.parseFloat(item[0]) > 1.50 && Number.parseFloat(item[0]) < 1.8) {
             let lineString = `${parse(item[0])} ${parse(item[1])}  ${parse(item[2])} ${item[3]}\n`;
             txt += lineString;
         }
+        if(Number.parseFloat(item[0]) == 1.7) {
+            num +=1;
+            t += Number.parseFloat(item[1]);
+        }
     });
+    console.log(t/num)
 
     await fs.writeFileSync(location+'En.txt',txt);
 })();

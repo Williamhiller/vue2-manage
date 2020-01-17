@@ -136,8 +136,14 @@ let start = async function (code) {
             let date = detail[3];
             // "04-27 19:11".split("-");
             if(date.split("-")[0].length < 4) { // 判断第一个是否是年，有可能是有年份的
-                date = new Date().getFullYear() + "-" +date;
+                let year = new Date().getFullYear();
+                let month = Number.parseInt(date.split("-")[0]);
+                if(month > 8) { //  很少提前4个月开出，故认为年份要-1
+                    year--;
+                }
+                date = `${year}-${date}`;
             }
+
             let iData = [a,b,c,date,rate];
             if(arr[0] === L_code) {
                 saveData.L = iData

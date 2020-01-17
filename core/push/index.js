@@ -12,9 +12,9 @@ const HOST = 'http://sdk.open.api.igexin.com/apiex.htm';
 // let HOST = 'https://api.getui.com/apiex.htm';
 
 // 定义常量, appId、appKey、masterSecret 采用本文档 "第二步 获取访问凭证 "中获得的应用配置
-const APPID = '8IjojWNlxV58Ue0z5PpT94';
-const APPKEY = 'uQGHPiNaO38TSmKRd3MOU3';
-const MASTERSECRET = 'w06hgQBOCdAuhCm2ltHotA';
+const APPID = 'bp6rtoQJ7w99jCE4WwCkq4';
+const APPKEY = '1Y1NNVc6s2A5fIcEGAcja3';
+const MASTERSECRET = 'MCjRWQNJ0e8D79wICHBg4A';
 
 const setMessage = function(title, text) {
     let template = new NotificationTemplate({
