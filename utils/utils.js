@@ -50,6 +50,9 @@ module.exports = {
             }
         });
         res = res + w + d +l;
+        if(w === 0 && d === 0 && l === 0) {
+            res = '---'
+        }
 
         return res;
     },

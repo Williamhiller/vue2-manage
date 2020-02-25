@@ -81,7 +81,9 @@ let writeFun = function (data, saveData) {
 
     data.matchData.first = `${saveData.W[0].toFixed(2)} ${saveData.W[1].toFixed(2)} ${saveData.W[2].toFixed(2)} >${saveData.W[3]}`;
     output += `威廉 ${data.matchData.first}\n`;
-    output += `立博 ${saveData.L[0].toFixed(2)} ${saveData.L[1].toFixed(2)} ${saveData.L[2].toFixed(2)} >${saveData.L[3]}\n`;
+    if(saveData.L.length > 0) {
+        output += `立博 ${saveData.L[0].toFixed(2)} ${saveData.L[1].toFixed(2)} ${saveData.L[2].toFixed(2)} >${saveData.L[3]}\n`;
+    }
 
     data.matchData.output = output;
     data.matchData.homeScore = home[0];
@@ -109,13 +111,16 @@ let start = async function (code) {
     let url = `http://op1.win007.com/oddslist/${code}.htm`;
     let oddData = await getOddData(url);
     // data game和gameDetail 其中game 大概在第26位置 82|code|Ladbrokes  William Hill
-    let L_code , W_code;
+    let L_code , W_code , code_365;
     oddData.game.forEach(function (item) {
         if(item.indexOf("|Ladbrokes|") !== -1) {
             L_code = item.split("|")[1];
         }
         if(item.indexOf("|William Hill|") !== -1) {
             W_code = item.split("|")[1];
+        }
+        if(item.indexOf("|Bet 365|") !== -1) {
+            code_365 = item.split("|")[1];
         }
     });
     if(!L_code && !W_code) {
@@ -124,6 +129,15 @@ let start = async function (code) {
 
     oddData.gameDetail.forEach(function (item) {
         let arr = item.split("^");
+        if(arr[0] === L_code) {
+            data.ladbrokes = arr[1];
+        }
+        if(arr[0] === W_code) {
+            data.william = arr[1];
+        }
+        if(arr[0] === code_365) {
+            data.bet = arr[1];
+        }
         if(arr[0] === L_code || arr[0] === W_code) {
             let allData = arr[1].split(";");
             let detail = allData[allData.length-2].split("|");

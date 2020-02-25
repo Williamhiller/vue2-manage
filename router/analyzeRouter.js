@@ -31,7 +31,18 @@ module.exports = (app) => {
 
             res.json({
                 code : 200,
-                data : matchData
+                data : {
+                    homeName : matchData.homeName,
+                    guestName : matchData.guestName,
+                    league : matchData.league,
+                    first : matchData.first,
+                    output : matchData.output,
+                    homeScore : matchData.homeScore,
+                    guestScore : matchData.guestScore,
+                    ladbrokes : data.ladbrokes,
+                    william : data.william,
+                    bet : data.bet
+                }
             })
         }else {
             res.json({
@@ -73,7 +84,7 @@ module.exports = (app) => {
             params.round = _analyze.round;
         }
 
-        Analyze.find(params).sort({_id:-1}).exec((idErr, list)  => {
+        Analyze.find(params).limit(20).sort({_id:-1}).exec((idErr, list)  => {
             if (idErr) {
                 res.json({
                     code : 400,

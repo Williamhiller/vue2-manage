@@ -11,10 +11,10 @@ module.exports = (async function () {
     const browser = await puppeteer.launch({
         headless: true,
         defaultViewport: {
-            width: 1020,
+            width: 1920,
             height: 1080
         },
-        executablePath: executablePath
+        executablePath : executablePath
     });
     return {
         getMatchRound : function (url) {
@@ -47,6 +47,8 @@ module.exports = (async function () {
                    var strArr = tds[3].getAttribute('onclick').split('\'');
 
                    data.params = strArr[1];
+                   data.home = window.hometeam_cn;
+                   data.guest = window.guestteam_cn;
 
                    return data;
                });

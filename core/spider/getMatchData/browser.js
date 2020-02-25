@@ -15,6 +15,5 @@ module.exports = (async () => {
         },
         executablePath : executablePath
     });
-    console.log('browser open');
     return browser;
 })();

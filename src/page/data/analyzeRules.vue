@@ -121,7 +121,15 @@
     export default {
         data(){
             return {
-                options : [{text: "-1", value: "-1"},{text: "0", value: "0"},{text: "1", value: "1"},{text: "1.5", value: "1.5"},{text: "2", value: "2"}],
+                options : [
+                    {text: "-2", value: "-2"},
+                    {text: "-1.5", value: "-1.5"},
+                    {text: "-1", value: "-1"},
+                    {text: "0", value: "0"},
+                    {text: "1", value: "1"},
+                    {text: "1.5", value: "1.5"},
+                    {text: "2", value: "2"}
+                ],
                 tacticsList: [],
                 tacticsMatch: [],
                 tacticsAdd: {

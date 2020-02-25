@@ -41,6 +41,9 @@
         <div class="submit_btn">
   			<el-button type="primary" @click="submit">提交</el-button>
         </div>
+        <div>
+            <compare-line :lineData='lineData'></compare-line>
+        </div>
     </div>
 </template>
 
@@ -48,6 +51,7 @@
     import { getCodeData,uploadAnalyze } from '@/api/getData'
     import headTop from '../../components/headTop'
     import { quillEditor } from 'vue-quill-editor'
+    import compareLine from '../../components/compareLine'
 
     export default {
         data(){
@@ -58,12 +62,14 @@
                 code : '',
                 content: '',
 			    editorOption: {},
-                matchData : {}
+                matchData : {},
+                lineData : null
             }
         },
     	components: {
     		headTop,
     		quillEditor,
+            compareLine
     	},
         computed: {
           	editor() {
@@ -79,6 +85,11 @@
                 if(res.data.code === 200) {
                     this.matchData = res.data.data;
                 }
+                this.lineData = {
+                    william : this.matchData.william,
+                    ladbrokes : this.matchData.ladbrokes,
+                    bet : this.matchData.bet
+                };
             },
             async submit(){
                 if(this.code === '') {

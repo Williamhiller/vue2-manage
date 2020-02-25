@@ -12,7 +12,6 @@ var logger = require('./server_modules/log.js').logger;
 
 // 数据库
 var mongoose = require('./server_modules/mongodb.js');
-var browser = require('./core/spider/getMatchData/browser');
 
 // 服务启动
 var app = express();
