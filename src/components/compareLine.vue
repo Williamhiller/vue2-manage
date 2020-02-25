@@ -111,10 +111,11 @@
                     },
                     legend: {
                         data: ['胜', '平', '负'],
-                        borderColor : "#fff"
+                        borderColor : "#fff",
+                        selectedMode : "single"
                     },
                     grid: {
-                        left: '3%',
+                        left: '1%',
                         right: '3%',
                         bottom: '3%',
                         containLabel: true
@@ -142,11 +143,12 @@
                     yAxis: {
                         type: 'value',
                         min : function (value) {
-                            return value.min - 0.2;
+                            return value.min;
                         },
                         max : function (value) {
                             return value.max + 0.2;
-                        }
+                        },
+                        minInterval : 0.01
                     },
                     series: []
                 };
@@ -193,7 +195,7 @@
     }
     .companyColor {
         text-align: right;
-        padding: 10px;
+        padding: 10px 40px;
         position: absolute;
         right: 0;
         font-size: 14px;
