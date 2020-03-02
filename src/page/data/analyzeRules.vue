@@ -42,6 +42,23 @@
 
             <el-divider></el-divider>
             <div class="table_container">
+
+                <el-row :gutter="20" class="mt20">
+                    <el-col :span="20">
+                        <el-checkbox-group v-model="areaArr">
+                            <el-checkbox @change="filterTactic" v-for="item in ranges" v-bind:label="item" v-bind:key="item"></el-checkbox>
+                        </el-checkbox-group>
+                    </el-col>
+                    <el-col :span="20" style="margin-top: 10px">
+                        <el-checkbox-group v-model="resultArr">
+                            <el-checkbox label="胜" @change="filterTactic"></el-checkbox>
+                            <el-checkbox label="平" @change="filterTactic"></el-checkbox>
+                            <el-checkbox label="负" @change="filterTactic"></el-checkbox>
+                        </el-checkbox-group>
+                    </el-col>
+                </el-row>
+
+                <el-divider></el-divider>
                 <el-row :gutter="10">
                     <el-col :span="12">
                         <el-table
@@ -53,8 +70,6 @@
                             <el-table-column
                                 width="80"
                                 property="area"
-                                :filters="options"
-                                :filter-method="filterArea"
                                 label="区间">
                             </el-table-column>
                             <el-table-column
@@ -121,15 +136,8 @@
     export default {
         data(){
             return {
-                options : [
-                    {text: "-2", value: "-2"},
-                    {text: "-1.5", value: "-1.5"},
-                    {text: "-1", value: "-1"},
-                    {text: "0", value: "0"},
-                    {text: "1", value: "1"},
-                    {text: "1.5", value: "1.5"},
-                    {text: "2", value: "2"}
-                ],
+                ranges : [ "2", "1.5", "1", "0", "-1", "-1.5", "-2"],
+                tacticsListAll: [],
                 tacticsList: [],
                 tacticsMatch: [],
                 tacticsAdd: {
@@ -144,7 +152,9 @@
                     tactics: '',
                     situation: ''
                 },
-                activeRow: null
+                activeRow: null,
+                areaArr : [],
+                resultArr : ["胜","平","负"]
             }
         },
     	components: {
@@ -156,13 +166,18 @@
         computed: {
         },
         methods: {
-            filterArea(value, row) {
-                return row.area === value;
+            filterTactic() {
+                this.tacticsList = this.tacticsListAll.filter(item => {
+                    let areaArr = this.areaArr;
+                    let resultArr = this.resultArr;
+                    return areaArr.includes(item.area) && resultArr.includes(item.result)
+                })
             },
             async getTactics() {
                 const res = await getTacticsList();
                 if (res.data.code === 200) {
-                    this.tacticsList = res.data.data;
+                    this.tacticsListAll = res.data.data;
+                    // this.filterTactic();
                     this.$message.success('查询成功');
                 } else {
                     this.$message.error("查询失败");
