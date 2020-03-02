@@ -177,7 +177,7 @@
                 const res = await getTacticsList();
                 if (res.data.code === 200) {
                     this.tacticsListAll = res.data.data;
-                    // this.filterTactic();
+                    this.filterTactic();
                     this.$message.success('查询成功');
                 } else {
                     this.$message.error("查询失败");
@@ -210,8 +210,10 @@
                 }
             },
             async getTacticsMatch(row) {
+                if(!row) {
+                    return ;
+                }
                 this.activeRow = row;
-                console.log(row)
                 let tacticId = row._id;
                 let res = await getTacticsMatchList(tacticId);
                 if (res) {
