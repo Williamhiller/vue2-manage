@@ -2,10 +2,24 @@
     <div>
         <head-top></head-top>
 		<section class="data_section">
-<!--			<header class="section_title">数据统计</header>-->
-			<el-row :gutter="20" style="margin-bottom: 10px;">
-<!--                <el-col :span="4"><div class="data_list today_head"><span class="data_num head">当日数据：</span></div></el-col>-->
-			</el-row>
+			<header class="section_title">数据统计</header>
+
+            <el-row :gutter="10">
+                <el-col :span="2">
+                    <el-input v-model="date" placeholder="日期"></el-input>
+                </el-col>
+                <el-col :span="2">
+                    <el-input v-model="money" placeholder="余额"></el-input>
+                </el-col>
+                <el-col :span="6">
+                    <el-input v-model="account" placeholder="账户"></el-input>
+                </el-col>
+                <el-col :span="2">
+                    <el-button type="primary" @click="setData">确定</el-button>
+                </el-col>
+            </el-row>
+            <el-divider></el-divider>
+
 		</section>
     </div>
 </template>
@@ -15,21 +29,22 @@
     export default {
     	data(){
     		return {
-
+                date : "",
+                money : "",
+                account : ""
     		}
     	},
     	components: {
     		headTop
     	},
     	mounted(){
-    		for (let i = 6; i > -1; i--) {
-    		}
+
     	},
         computed: {
 
         },
     	methods: {
-    		async initData(){
+    		async setData(){
 
     		}
     	}
@@ -46,33 +61,7 @@
 			font-size: 30px;
 			margin-bottom: 10px;
 		}
-		.data_list{
-			text-align: center;
-			font-size: 14px;
-			color: #666;
-            border-radius: 6px;
-            background: #E5E9F2;
-            .data_num{
-                color: #333;
-                font-size: 26px;
 
-            }
-            .head{
-                border-radius: 6px;
-                font-size: 22px;
-                padding: 4px 0;
-                color: #fff;
-                display: inline-block;
-            }
-        }
-        .today_head{
-            background: #FF9800;
-        }
-        .all_head{
-            background: #20A0FF;
-        }
 	}
-    .wan{
-        .sc(16px, #333)
-    }
+
 </style>

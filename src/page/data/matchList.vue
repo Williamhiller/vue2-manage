@@ -14,6 +14,16 @@
 
             <el-divider></el-divider>
             <div class="table_container">
+                <el-row :gutter="20" class="mt20">
+                    <el-col :span="20">
+                        <el-checkbox-group v-model="matchArr">
+                            <el-checkbox @change="filterMatch" v-for="item in matchOptions" v-bind:label="item" v-bind:key="item"></el-checkbox>
+                        </el-checkbox-group>
+                    </el-col>
+                </el-row>
+
+                <el-divider></el-divider>
+
                 <el-table
                     :data="tableData"
                     border
@@ -25,8 +35,6 @@
                     <el-table-column
                         property="match"
                         label="联赛"
-                        :filters="options"
-                        :filter-method="filterMatch"
                         width="100">
                     </el-table-column>
                     <el-table-column
@@ -60,19 +68,19 @@
             return {
                 match: '',
                 tableData: [],
-                options: []
+                tableDataAll: [],
+                matchOptions: [],
+                matchArr : []
             }
         },
     	components: {
     		headTop,
     	},
-        computed: {
-
-        },
-
         methods: {
-            filterMatch(value, row) {
-                return row.match === value;
+            filterMatch() {
+                this.tableData = this.tableDataAll.filter(item=>{
+                    return this.matchArr.includes(item.match)
+                })
             },
             async getList(){
                 let params = {
@@ -87,9 +95,9 @@
                         type: 'success',
                         message: '查询成功'
                     });
-                    this.tableData = res.data.data;
-                    let arr = [], options = [], assianOptions = [];
-                    this.tableData.forEach((item) => {
+                    this.tableDataAll = res.data.data;
+                    let arr = [], options = [];
+                    this.tableDataAll.forEach((item) => {
                         if(!arr.includes(item.match)) {
                             options.push({
                                 text: item.match, value: item.match
@@ -97,7 +105,7 @@
                             arr.push(item.match)
                         }
                     });
-                    this.options = options;
+                    this.matchOptions = options;
                 }else{
                     this.$message.error("查询失败");
                 }
