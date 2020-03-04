@@ -4,7 +4,7 @@
 
         <div class="edit_container">
             <el-row :gutter="20">
-                <el-col :span="6">
+                <el-col :span="4">
                     <div class="edit_title">
                         <h3 class="">联赛</h3>
                         <el-select v-model="match" filterable placeholder="请选择">
@@ -17,19 +17,19 @@
                         </el-select>
                     </div>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="4">
                     <div class="edit_title">
                         <h3 class="">轮次</h3>
                         <el-input v-model="round"></el-input>
                     </div>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="4">
                     <div class="edit_title">
                         <h3 class="">球探编号</h3>
                         <el-input v-model="code"></el-input>
                     </div>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="4">
                     <div class="edit_title">
                         <h3 class="" style="color: #fff">查询</h3>
                         <el-button type="primary" @click="getList">确定</el-button>

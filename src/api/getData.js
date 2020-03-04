@@ -97,6 +97,15 @@ export const addTacticsMatch = (params) => Axios.post(`/tactics/match`,params);
  * 添加规则
  */
 export const deleteTacticsMatch = (id) => Axios.delete(`/tactics/match/${id}`);
+
+/**
+ *  获取账号信息
+ */
+export const getCountData = () => Axios.get(`/account`);
+/**
+ * 添加规则
+ */
+export const setCountData = (params) => Axios.post(`/account`,params);
 /**
  * 获取推送信息
  */
