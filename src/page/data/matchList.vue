@@ -14,13 +14,11 @@
 
             <el-divider></el-divider>
             <div class="table_container">
-                <el-row :gutter="20" class="mt20">
-                    <el-col :span="20">
-                        <el-checkbox-group v-model="matchArr">
-                            <el-checkbox @change="filterMatch" v-for="item in matchOptions" v-bind:label="item" v-bind:key="item"></el-checkbox>
-                        </el-checkbox-group>
-                    </el-col>
-                </el-row>
+                <div>
+                    <el-checkbox-group v-model="matchArr">
+                        <el-checkbox @change="filterMatch" v-for="item in matchOptions" v-bind:label="item" v-bind:key="item"></el-checkbox>
+                    </el-checkbox-group>
+                </div>
 
                 <el-divider></el-divider>
 
@@ -96,16 +94,13 @@
                         message: '查询成功'
                     });
                     this.tableDataAll = res.data.data;
-                    let arr = [], options = [];
+                    let arr = [];
                     this.tableDataAll.forEach((item) => {
                         if(!arr.includes(item.match)) {
-                            options.push({
-                                text: item.match, value: item.match
-                            });
                             arr.push(item.match)
                         }
                     });
-                    this.matchOptions = options;
+                    this.matchOptions = arr;
                 }else{
                     this.$message.error("查询失败");
                 }
