@@ -1,6 +1,5 @@
 
 let MongoClient = require('mongodb').MongoClient;
-let spiderData = require("./spiderData");
 
 
 let url = "http://zq.win007.com/cn/League/2018-2019/36.html";

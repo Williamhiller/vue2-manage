@@ -39,16 +39,20 @@ module.exports = (async function () {
                let data = await page.evaluate(() =>{
                    var data = {};
 
+                   var scores = document.getElementById("headVs").querySelectorAll(".score");
                    data.game = window.game;
-                   data.hash = window.hsDetail._hash;
-                   // oddstr_115 威廉 370 oddset
-                   var oddset = document.getElementById('oddstr_115');
-                   var tds = oddset.querySelectorAll('td');
-                   var strArr = tds[3].getAttribute('onclick').split('\'');
+                   data.gameDetail = window.gameDetail;
+                   data.result = scores[0].innerText + "-" + scores[1].innerText;
 
-                   data.params = strArr[1];
-                   data.home = window.hometeam_cn;
-                   data.guest = window.guestteam_cn;
+                   // data.hash = window.hsDetail._hash;
+                   // oddstr_115 威廉 370 oddset
+                   // var oddset = document.getElementById('oddstr_115');
+                   // var tds = oddset.querySelectorAll('td');
+                   // var strArr = tds[3].getAttribute('onclick').split('\'');
+
+                   // data.params = strArr[1];
+                   // data.home = window.hometeam_cn;
+                   // data.guest = window.guestteam_cn;
 
                    return data;
                });
@@ -70,10 +74,17 @@ module.exports = (async function () {
                         }
                         var tds = item.querySelectorAll('td');
                         data.push([
-                            tds[0].innerText,
-                            tds[1].innerText,
-                            tds[2].innerText,
-                            tds[6].innerText
+                            tds[0].innerText, // 主胜
+                            tds[1].innerText, //平
+                            tds[2].innerText,//负
+                            tds[3].innerText,//胜概率
+                            tds[4].innerText,//平概率
+                            tds[5].innerText,//负概率
+                            tds[6].innerText,//返还率
+                            tds[7].innerText,//主凯利
+                            tds[8].innerText,//平凯利
+                            tds[9].innerText,//客凯利
+                            tds[10].innerText,//时间
                         ])
                     });
 
