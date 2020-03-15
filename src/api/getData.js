@@ -76,27 +76,27 @@ export const deletePosition = (id) => Axios.delete(`/position/${id}`);
 /**
  * 添加联赛位置
  */
-export const getTacticsList = () => Axios.get(`/tactics/list`);
+export const getRulesList = (match) => Axios.get(`/rules/list?match=${match}`);
 /**
  * 添加规则
  */
-export const addTactics = (params) => Axios.post(`/tactics`,params);
+export const addRules = (params) => Axios.post(`/rules`,params);
 /**
  * 添加规则
  */
-export const deleteTactics = (id) => Axios.delete(`/tactics/${id}`);
+export const deleteRules = (id) => Axios.delete(`/rules/${id}`);
 /**
  * 获取策略比赛列表
  */
-export const getTacticsMatchList = (tacticId) => Axios.get(`/tactics/match/${tacticId}`);
+export const getRulesMatchList = (ruleId) => Axios.get(`/rules/match/${ruleId}`);
 /**
  * 添加规则比赛
  */
-export const addTacticsMatch = (params) => Axios.post(`/tactics/match`,params);
+export const addRulesMatch = (params) => Axios.post(`/rules/match`,params);
 /**
  * 添加规则
  */
-export const deleteTacticsMatch = (id) => Axios.delete(`/tactics/match/${id}`);
+export const deleteRulesMatch = (id) => Axios.delete(`/rules/match/${id}`);
 
 /**
  *  获取账号信息

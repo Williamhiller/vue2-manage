@@ -1,20 +1,25 @@
 
-const Tactic = require('../models/tactic')
-const TacticMatch = require('../models/tacticMatch')
+const Rule = require('../models/rule')
+const RuleMatch = require('../models/ruleMatch')
 
 module.exports = (app) => {
 
-    app.get('/tactics/list', async (req, res) => {
-        let list = await Tactic.find({});
+    app.get('/rules/list', async (req, res) => {
+        const _param = req.query;
+        let params = {};
+        if(_param.match) {
+            params.match = _param.match;
+        }
+        let list = await Rule.find(params);
         res.json({
             code : 200,
             data : list
         })
     })
-    app.delete('/tactics/:id', async (req, res) => {
+    app.delete('/rules/:id', async (req, res) => {
         const id = req.params.id
 
-        Tactic.findOneAndDelete({'_id': id}, err => {
+        Rule.findOneAndDelete({'_id': id}, err => {
             if(err) {
                 res.json({
                     errno: 1,
@@ -28,10 +33,10 @@ module.exports = (app) => {
             })
         })
     });
-    app.post('/tactics', async (req, res) => {
-        const _tactic = req.body;
-        let tactic = new Tactic(_tactic)
-        tactic.save((err) => {
+    app.post('/rules', async (req, res) => {
+        const _rule = req.body;
+        let rule = new Rule(_rule)
+        rule.save((err) => {
             if (err) {
                 res.json({
                     errno: 1,
@@ -46,9 +51,9 @@ module.exports = (app) => {
         });
     });
 
-    app.get('/tactics/match/:tacticId', async (req, res) => {
-        let tacticId = req.params.tacticId;
-        let list = await TacticMatch.find({tacticId : tacticId});
+    app.get('/rules/match/:ruleId', async (req, res) => {
+        let ruleId = req.params.ruleId;
+        let list = await RuleMatch.find({ruleId : ruleId});
         if(res) {
             res.json({
                 code : 200,
@@ -56,10 +61,10 @@ module.exports = (app) => {
             })
         }
     });
-    app.delete('/tactics/match/:id', async (req, res) => {
+    app.delete('/rules/match/:id', async (req, res) => {
         const id = req.params.id;
 
-        TacticMatch.findOneAndDelete({'_id': id}, err => {
+        RuleMatch.findOneAndDelete({'_id': id}, err => {
             if(err) {
                 res.json({
                     errno: 1,
@@ -73,10 +78,10 @@ module.exports = (app) => {
             })
         })
     });
-    app.post('/tactics/match', async (req, res) => {
-        const _tactic = req.body;
-        let tacticMatch = new TacticMatch(_tactic)
-        tacticMatch.save((err) => {
+    app.post('/rules/match', async (req, res) => {
+        const _rule = req.body;
+        let ruleMatch = new RuleMatch(_rule)
+        ruleMatch.save((err) => {
             if (err) {
                 res.json({
                     errno: 1,

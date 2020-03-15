@@ -4,7 +4,7 @@ const Article = require('../models/article')
 const pushRouter = require('./pushRouter')
 const analyzeRouter = require('./analyzeRouter')
 const positionRouter = require('./positionRouter')
-const tacticRouter = require('./tacticRouter')
+const ruleRouter = require('./ruleRouter')
 const accountRouter = require('./accountRouter')
 
 module.exports = (app) => {
@@ -18,7 +18,7 @@ module.exports = (app) => {
     pushRouter(app)
     analyzeRouter(app)
     positionRouter(app)
-    tacticRouter(app)
+    ruleRouter(app)
     accountRouter(app)
 
     app.get('/admin/info', (req, res) => {
