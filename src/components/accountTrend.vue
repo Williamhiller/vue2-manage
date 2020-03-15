@@ -21,7 +21,6 @@
         methods: {
             initData(){
                 let data = [];
-                console.log(this.trendData)
                 this.trendData.forEach( item => {
                     data.push([item.date, item.money])
                 });
@@ -32,11 +31,10 @@
                     },
                     tooltip: {
                         trigger: 'axis',
-                        // formatter: function (params) {
-                        //     params = params[0];
-                        //     var date = new Date(params.name);
-                        //     return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
-                        // },
+                        formatter: function (params) {
+                            let data = params[0];
+                            return `金额：${data.data[1]}`;
+                        },
                     },
                     xAxis: {
                         type: 'time',
@@ -50,15 +48,15 @@
                         splitLine: {
                             show: false
                         },
-                        min : function (value) {
-                            return value.min;
-                        },
+                        // min : function (value) {
+                        //     return value.min;
+                        // },
                         max : function (value) {
                             return value.max;
                         }
                     },
                     series: [{
-                        name: '模拟数据',
+                        name: '亚博',
                         type: 'line',
                         symbol: 'circle',
                         symbolSize: 10,
