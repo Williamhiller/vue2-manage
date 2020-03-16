@@ -27,8 +27,8 @@
 						<el-menu-item index="push">APP推送设置</el-menu-item>
 					</el-submenu>
 					<el-submenu index="7">
-						<template slot="title"><i class="el-icon-warning"></i>说明</template>
-						<el-menu-item index="explain">说明</el-menu-item>
+						<template slot="title"><i class="el-icon-warning"></i>其它</template>
+						<el-menu-item index="explain">其它</el-menu-item>
 					</el-submenu>
 				</el-menu>
 			</el-col>

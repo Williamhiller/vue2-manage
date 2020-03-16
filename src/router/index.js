@@ -61,7 +61,7 @@ const routes = [
         },{
 			path: '/explain',
 			component: explain,
-			meta: ['说明', '说明'],
+			meta: ['其它', '其它'],
 		},{
             path: '/push',
             component: push,
