@@ -28,10 +28,7 @@ export const signout = () => Axios.get('/admin/signout');
  */
 
 export const getAdminInfo = () => Axios.get('/admin/info');
-/**
- * 保存文章
- */
-export const uploadArticle = data => Axios.post('/article/upload', data);
+
 /**
  * 保存分析
  */
@@ -126,3 +123,8 @@ export const deletePush = id => Axios.delete(`/push/delete/${id}`);
  */
 
 export const changeSwitch = data => Axios.post(`/push/toggle`, data);
+
+/**
+ *  获取账号信息
+ */
+export const getCompareData = (data) => Axios.get(`/compare`+ parseParams(data));

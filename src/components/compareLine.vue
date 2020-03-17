@@ -181,7 +181,7 @@
     }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 	@import '../style/mixin';
     @w: #F5B93B;
     @l: #f01e28;

@@ -6,7 +6,6 @@ Vue.use(Router)
 const login = r => require.ensure([], () => r(require('@/page/login')), 'login');
 const manage = r => require.ensure([], () => r(require('@/page/manage')), 'manage');
 const home = r => require.ensure([], () => r(require('@/page/home')), 'home');
-const vueEdit = r => require.ensure([], () => r(require('@/page/edit/vueEdit')), 'vueEdit');
 const myAnalyze = r => require.ensure([], () => r(require('@/page/edit/myAnalyze')), 'myAnalyze');
 const myAnalyzeList = r => require.ensure([], () => r(require('@/page/data/myAnalyzeList')), 'myAnalyzeList');
 const matchList = r => require.ensure([], () => r(require('@/page/data/matchList')), 'matchList');
@@ -29,10 +28,6 @@ const routes = [
 			path: '',
 			component: home,
 			meta: [],
-		},{
-			path: '/vueEdit',
-			component: vueEdit,
-			meta: ['编辑', '文本编辑'],
 		},{
             path: '/myAnalyze',
             component: myAnalyze,

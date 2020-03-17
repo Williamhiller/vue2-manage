@@ -1,25 +1,23 @@
 
-const Ids = require('../models/id')
-const Article = require('../models/article')
-const pushRouter = require('./pushRouter')
-const analyzeRouter = require('./analyzeRouter')
-const positionRouter = require('./positionRouter')
-const ruleRouter = require('./ruleRouter')
-const accountRouter = require('./accountRouter')
+const pushRouter = require('./pushRouter');
+const analyzeRouter = require('./analyzeRouter');
+const positionRouter = require('./positionRouter');
+const ruleRouter = require('./ruleRouter');
+const accountRouter = require('./accountRouter');
+const Compare = require('../models/compare')
 
 module.exports = (app) => {
     app.use((req, res, next) => {
-        const _user = req.session.user
-        app.locals.user = _user
+        app.locals.user = req.session.user;
 
         next()
-    })
+    });
 
-    pushRouter(app)
-    analyzeRouter(app)
-    positionRouter(app)
-    ruleRouter(app)
-    accountRouter(app)
+    pushRouter(app);
+    analyzeRouter(app);
+    positionRouter(app);
+    ruleRouter(app);
+    accountRouter(app);
 
     app.get('/admin/info', (req, res) => {
         res.json({
@@ -31,9 +29,9 @@ module.exports = (app) => {
                 "avatar": 'avatar.png'
             }
         })
-    })
+    });
     app.post('/admin/login', (req, res) => {
-        const _user = req.body
+        const _user = req.body;
 
         if(_user.name === "bestwin" && _user.password === "bestwin") {
             req.session.user = {user : 'admin'};
@@ -47,32 +45,14 @@ module.exports = (app) => {
                 message : '用户名或密码不正确！'
             })
         }
-    })
-
-    app.post('/article/upload', (req, res) => {
-        const _article = req.body
-
-        Ids.findOneAndUpdate({"name": 'article'}, {$inc: {'id': 1}}, {new: true}, (idErr, ids) =>{
-            if (idErr) {
-                global.logger.error(idErr)
-            }
-            _article.id = ids.id
-
-            var article = new Article(_article)
-            article.save( (err) => {
-                if (err) {
-                    global.logger.error(err);
-                    res.json({
-                        code: 500,
-                        data: err
-                    })
-                    return;
-                }
-                res.json({
-                    code: 200,
-                    data: '添加成功'
-                })
-            })
-        });
-    })
+    });
+    app.get('/compare',async (req, res) => {
+        const _query= req.query;
+        let skip = Number.parseInt(_query.skip) || 0;
+        let list = await Compare.find({}).skip(skip).limit(1);
+        res.json({
+            code : 200,
+            data : list
+        })
+    });
 };
