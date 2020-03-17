@@ -17,18 +17,19 @@
                     </div>
                 </el-col>
             </el-row>
-负
+
             <el-divider></el-divider>
-            <el-radio @change="initData" v-model="compareType"  label="kickback">返还率</el-radio>
+            <el-radio @change="initData" v-model="compareType"  label="probability">概率</el-radio>
             <el-radio @change="initData" v-model="compareType"  label="odd">赔率</el-radio>
             <el-divider></el-divider>
 
+            <div v-if="lineData">{{lineData.result}}</div>
 <!--            <div class="companyColor">-->
 <!--                <span class="w">威廉<em></em></span>-->
 <!--                <span class="l">立博<em></em></span>-->
 <!--                <span class="bet">365<em></em></span>-->
 <!--            </div>-->
-            <div id="kickbackChart" style="width: 50%;height:350px;"></div>
+            <div id="kickbackChart" style="width: 100%;height:450px;"></div>
         </div>
     </div>
 </template>
@@ -42,6 +43,7 @@
     import 'echarts/lib/component/title';
     import 'echarts/lib/component/tooltip';
     import 'echarts/lib/component/legend';
+    import 'echarts/lib/component/dataZoom';
 
     export default {
     	components: {
@@ -50,7 +52,7 @@
         data(){
             return {
                 skip : "",
-                compareType : "kickback",
+                compareType : "probability",
                 lineData : null
             }
         },
@@ -105,6 +107,11 @@
                         }
                         let all = ""+`${a} ${b} ${c}`;
 
+                        if(this.compareType === "probability") {
+                            a = rate/a;
+                            b = rate/b;
+                            c = rate/c;
+                        }
                         arrObj.a.push([date, a, rate, all]);
                         arrObj.b.push([date, b, rate, all]);
                         arrObj.c.push([date, c, rate, all])
@@ -147,6 +154,7 @@
                         show : true,
                         trigger: 'item',
                         formatter: function (params) {
+                            console.log(params)
                             return `返还：${params.data[2]}<br> 赔率：${params.data[3]}`;
                         }
                     },
