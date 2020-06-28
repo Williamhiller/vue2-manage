@@ -1,6 +1,14 @@
 
+import scoreData from '../static_temp/score.json'
+import scoreLevel from '../static_temp/score.json'
 module.exports = {
-
+    parseLen (text, len) {
+        let indent = 0;
+        if(text.length < len) {
+            indent = len - text.length;
+        }
+        return text + " ".repeat(indent)
+    },
     /**
      * 获取北京时间
      * @param date
@@ -37,7 +45,7 @@ module.exports = {
      * @returns {string|string}
      */
     getMatchOverview (text) {
-        let res = "";
+        let common = "";
         let arr = text.split("");
         let w = 0,d=0,l=0;
         arr.forEach((item) => {
@@ -49,12 +57,20 @@ module.exports = {
                 l++
             }
         });
-        res = res + w + d +l;
-        if(w === 0 && d === 0 && l === 0) {
-            res = '---'
+        common = common + w + d +l;
+
+        let score = 0, level = 0;
+        for(let key in scoreData) {
+            if(scoreData[key].incldes(text)) {
+                score = key;
+            }
+        }
+        let position = scoreLevel.index(score);
+        if(position != -1) {
+            level = parseInt(position/6)
         }
 
-        return res;
+        return `${this.parseLen(text,6)}|${this.parseLen(common,3)}|${this.parseLen(score,3)}|${level}}`;
     },
     /**
      * 计算大小球，序列化

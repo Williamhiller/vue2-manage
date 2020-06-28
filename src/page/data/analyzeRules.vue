@@ -45,7 +45,13 @@
 
                 <el-row :gutter="20" class="mt20">
                     <el-col :span="20">
-                        <el-radio @change="getRules" v-model="selectedMatch" v-for="item in matches" v-bind:label="item" v-bind:text="item"></el-radio>
+                        <el-radio 
+                            @change="getRules" 
+                            v-model="selectedMatch" 
+                            v-for="item in matches" 
+                            :key="item"
+                            v-bind:label="item" 
+                            v-bind:text="item"></el-radio>
                     </el-col>
                     <el-col :span="20" style="margin-top: 10px">
 

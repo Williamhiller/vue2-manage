@@ -1,6 +1,6 @@
 
 const puppeteer = require('puppeteer-core');
-const findChrome = require('../../../node_modules/carlo/lib/find_chrome');
+// const findChrome = require('../../../node_modules/carlo/lib/find_chrome');
 
 let browser;
 

@@ -1,8 +1,6 @@
 /**
-
  爬取单场比赛的分析数据，欧赔细节等
  */
-
 let getData = require('../spider/getMatchData/getData'); // 获取联赛数据，近况往绩等
 let getOddData = require('../spider/getMatchData/getOddData'); // 获取欧赔数据
 let utils = require("../../utils/utils");
@@ -13,7 +11,6 @@ let utils = require("../../utils/utils");
  * @param saveData
  */
 let writeFun = function (data, saveData) {
-
     let matchData = data.matchData;
     // 开始解析近况往绩
     let history = "" , home = ["",""], guest = ["",""];
@@ -72,9 +69,12 @@ let writeFun = function (data, saveData) {
     let output;
     output = "";
     output +=  `${matchData.homeName}-${matchData.guestName}\n`;
+
     output += `往绩${utils.getMatchOverview(history)}（${history}）\n`;
+
     output += `主队${utils.getMatchOverview(home[0])}（${home[0]}） `;
     output += `主场${utils.getMatchOverview(home[1])}（${home[1]}）\n`;
+
     output += `客队${utils.getMatchOverview(guest[0])}（${guest[0]}） `;
     output += `客场${utils.getMatchOverview(guest[1])}（${guest[1]}）\n`;
     // output += calcScore(history,home,guest);
@@ -91,8 +91,6 @@ let writeFun = function (data, saveData) {
     // fs.writeFile(location+'analyze/gameAnalyze.txt',output,function(err){
     //     console.log("fs-write-success",err)
     // });
-
-
     return data;
 };
 
