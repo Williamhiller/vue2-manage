@@ -70,13 +70,13 @@ let writeFun = function (data, saveData) {
     output = "";
     output +=  `${matchData.homeName}-${matchData.guestName}\n`;
 
-    output += `往绩${utils.getMatchOverview(history)}（${history}）\n`;
+    output += `往绩${utils.getMatchOverview(history)}\n`;
 
-    output += `主队${utils.getMatchOverview(home[0])}（${home[0]}） `;
-    output += `主场${utils.getMatchOverview(home[1])}（${home[1]}）\n`;
+    output += `主队${utils.getMatchOverview(home[0])}    `;
+    output += `主场${utils.getMatchOverview(home[1])}\n`;
 
-    output += `客队${utils.getMatchOverview(guest[0])}（${guest[0]}） `;
-    output += `客场${utils.getMatchOverview(guest[1])}（${guest[1]}）\n`;
+    output += `客队${utils.getMatchOverview(guest[0])}    `;
+    output += `客场${utils.getMatchOverview(guest[1])}\n`;
     // output += calcScore(history,home,guest);
 
     data.matchData.first = `${saveData.W[0].toFixed(2)} ${saveData.W[1].toFixed(2)} ${saveData.W[2].toFixed(2)} >${saveData.W[3]}`;

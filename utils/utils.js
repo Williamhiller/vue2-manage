@@ -1,6 +1,7 @@
 
-import scoreData from '../static_temp/score.json'
-import scoreLevel from '../static_temp/score.json'
+const scoreData =require('../static_temp/score.json')
+const scoreLevel =require('../static_temp/scoreLevel.json')
+
 module.exports = {
     parseLen (text, len) {
         let indent = 0;
@@ -61,16 +62,16 @@ module.exports = {
 
         let score = 0, level = 0;
         for(let key in scoreData) {
-            if(scoreData[key].incldes(text)) {
+            if(scoreData[key].includes(text)) {
                 score = key;
             }
         }
-        let position = scoreLevel.index(score);
+        let position = scoreLevel.indexOf(parseInt(score));
         if(position != -1) {
-            level = parseInt(position/6)
+            level = Math.ceil(position/10)
         }
 
-        return `${this.parseLen(text,6)}|${this.parseLen(common,3)}|${this.parseLen(score,3)}|${level}}`;
+        return `${this.parseLen(text,6)}|${this.parseLen(common,3)}|${this.parseLen(score,3)}|${level}`;
     },
     /**
      * 计算大小球，序列化
