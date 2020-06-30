@@ -70,8 +70,17 @@ module.exports = {
         if(position != -1) {
             level = Math.ceil(position/10)
         }
+        let finalScore = (score/62)*100;
 
-        return `${this.parseLen(text,6)}|${this.parseLen(common,3)}|${this.parseLen(score,3)}|${level}`;
+        return `${
+            this.parseLen(text,6)
+        }|${
+            this.parseLen(common,3)
+        }|${
+            this.parseLen(score,3)
+        }|${level}|${
+            finalScore.toFixed(1)
+        }`;
     },
     /**
      * 计算大小球，序列化
