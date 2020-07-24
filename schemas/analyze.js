@@ -16,7 +16,8 @@ var ArticleSchema = new mongoose.Schema({
     output: String,
     replay: String,
     result: Number,
-    score: String
+    score: String,
+    william: String
 });
 
 ArticleSchema.statics = {

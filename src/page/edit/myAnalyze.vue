@@ -30,6 +30,9 @@
                 <el-collapse-item title="对战数据" name="1">
                     <pre>{{matchData.output}}</pre>
                 </el-collapse-item>
+                <el-collapse-item title="威廉数据" name="2">
+                    <william-data :william="williamOdd"></william-data>
+                </el-collapse-item>
             </el-collapse>
         	<quill-editor v-model="content"
                 ref="myQuillEditor"
@@ -52,6 +55,7 @@
     import headTop from '../../components/headTop'
     import { quillEditor } from 'vue-quill-editor'
     import compareLine from '../../components/compareLine'
+    import williamData from '../../components/williamData'
 
     export default {
         data(){
@@ -63,13 +67,15 @@
                 content: '',
 			    editorOption: {},
                 matchData : {},
-                lineData : null
+                lineData : null,
+                williamOdd : ''
             }
         },
     	components: {
     		headTop,
     		quillEditor,
-            compareLine
+            compareLine,
+            williamData
     	},
         computed: {
           	editor() {
@@ -78,13 +84,15 @@
         },
         methods: {
 		    onEditorReady(editor) {
-		        console.log('editor ready!', editor)
+                
 		    },
             async getData() {
 		        let res = await getCodeData(this.code)
                 if(res.data.code === 200) {
                     this.matchData = res.data.data;
                 }
+                this.williamOdd = this.matchData.william;
+
                 this.lineData = {
                     william : this.matchData.william,
                     ladbrokes : this.matchData.ladbrokes,
@@ -112,7 +120,8 @@
                     guestScore : matchData.guestScore,
                     first : matchData.first,
                     output: matchData.output,
-                    analyse: matchData.content
+                    analyse: matchData.content,
+                    william: matchData.william
                 };
 
                 const res = await uploadAnalyze(params);

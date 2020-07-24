@@ -5,12 +5,6 @@
 
             <el-row :gutter="10">
                 <el-col :span="3">
-                    <el-select v-model="account" placeholder="账户">
-                        <el-option key="亚博"  value="亚博"></el-option>
-                        <el-option key="365"  value="365"></el-option>
-                    </el-select>
-                </el-col>
-                <el-col :span="3">
                     <el-input v-model="money" placeholder="余额"></el-input>
                 </el-col>
                 <el-col :span="4">
@@ -27,7 +21,7 @@
             </el-row>
             <el-divider></el-divider>
 
-            <account-trend :trendData="trendDataList"></account-trend>
+            <!-- <account-trend :trendData="trendDataList"></account-trend> -->
 		</section>
     </div>
 </template>
@@ -42,7 +36,7 @@
     		return {
                 date : "",
                 money : "",
-                account : "亚博",
+                account : "365",
                 trendDataList : []
     		}
     	},
