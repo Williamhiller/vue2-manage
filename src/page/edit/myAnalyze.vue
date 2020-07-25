@@ -88,7 +88,8 @@
                 this.lineData = {
                     william : this.matchData.william,
                     ladbrokes : this.matchData.ladbrokes,
-                    bet : this.matchData.bet
+                    bet : this.matchData.bet,
+                    betfair: this.matchData.betfair
                 };
             },
             async submit(){

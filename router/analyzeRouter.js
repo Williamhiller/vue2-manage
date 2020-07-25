@@ -41,7 +41,8 @@ module.exports = (app) => {
                     guestScore : matchData.guestScore,
                     ladbrokes : data.ladbrokes,
                     william : data.william,
-                    bet : data.bet
+                    bet : data.bet,
+                    betfair: data.betfair
                 }
             })
         }else {

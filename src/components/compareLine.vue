@@ -31,7 +31,8 @@
                     let colors = {
                         w : "#F5B93B",
                         l : "#f01e28",
-                        bet : "#14805e"
+                        bet : "#14805e",
+                        betfair : "#000000"
                     };
 
                     let arrObj = {
@@ -156,7 +157,8 @@
                     let series = [];
                     let w = this.lineData.william,
                         l = this.lineData.ladbrokes,
-                        bet = this.lineData.bet;
+                        bet = this.lineData.bet,
+                        betfair = this.lineData.betfair;
                     if(l) {
                         parseData("l", l, series);
                     }
@@ -165,6 +167,9 @@
                     }
                     if(bet) {
                         parseData("bet", bet, series);
+                    }
+                    if(bet) {
+                        parseData("betfair", betfair, series);
                     }
 
                     option.series = series;
@@ -186,6 +191,7 @@
     @w: #F5B93B;
     @l: #f01e28;
     @bet: #14805e;
+    @betfair: #000000;
     .compareLine {
         /*display: flex;*/
         /*justify-content: center;*/
@@ -222,6 +228,10 @@
         .bet {
             color: @bet;
             em{background-color: @bet;}
+        }
+        .betfair {
+            color: @betfair;
+            em{background-color: @betfair;}
         }
     }
 </style>
