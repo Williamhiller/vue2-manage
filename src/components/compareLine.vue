@@ -168,7 +168,7 @@
                     if(bet) {
                         parseData("bet", bet, series);
                     }
-                    if(bet) {
+                    if(betfair) {
                         parseData("betfair", betfair, series);
                     }
 

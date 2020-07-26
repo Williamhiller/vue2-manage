@@ -8,13 +8,13 @@ let utils = require("../../utils/utils");
 /**
  * 自动生成分析矩阵
  * @param data
- * @param williamList
+ * @param saveData
  */
-let writeFun = function (data, williamList) {
+let writeFun = function (data, saveData) {
     let matchData = data.matchData;
     // 开始解析近况往绩
     let history = "" , home = ["",""], guest = ["",""];
-    let williamDate = new Date(williamList[0][3]);
+    let williamDate = new Date(saveData.W[3]);
     matchData.historyData.forEach((item) => {
         let h , g;
         if(item[4] === matchData.homeCode) {
@@ -77,14 +77,15 @@ let writeFun = function (data, williamList) {
 
     output += `客队${utils.getMatchOverview(guest[0])}    `;
     output += `客场${utils.getMatchOverview(guest[1])}\n`;
+    // output += calcScore(history,home,guest);
 
-    // output += `------ \n`;
-    // williamList.forEach(item => {
-    //     output += `${item[0].toFixed(2)} ${item[1].toFixed(2)} ${item[2].toFixed(2)} | ${item[3]} | ${item[4]} \n`;
-    // })
+    data.matchData.first = `${saveData.W[0].toFixed(2)} ${saveData.W[1].toFixed(2)} ${saveData.W[2].toFixed(2)} >${saveData.W[3]}`;
+    output += `威廉 ${data.matchData.first}\n`;
+    if(saveData.L.length > 0) {
+        output += `立博 ${saveData.L[0].toFixed(2)} ${saveData.L[1].toFixed(2)} ${saveData.L[2].toFixed(2)} >${saveData.L[3]}\n`;
+    }
 
     data.matchData.output = output;
-
     data.matchData.homeScore = home[0];
     data.matchData.guestScore = guest[0];
     // fs.writeFile(location+'analyze/gameAnalyze.txt',output,function(err){
@@ -99,7 +100,10 @@ let writeFun = function (data, williamList) {
  * @returns {Promise<any>}
  */
 let start = async function (code) {
-    let williamList = [];
+    let saveData = { // 保存威廉和立博的初赔信息
+        W : [],
+        L : []
+    };
     let data = await getData(`http://zq.win007.com/analysis/${code}cn.htm`);
     // 获取欧赔数据
     let url = `http://op1.win007.com/oddslist/${code}.htm`;
@@ -132,40 +136,38 @@ let start = async function (code) {
         if(arr[0] === code_365) {
             data.bet = arr[1];
         }
-        if(arr[0] === W_code) {
+        if(arr[0] === L_code || arr[0] === W_code) {
             let allData = arr[1].split(";");
-            allData.forEach( (item) => {
-                if(!item) {
-                    return;
+            let detail = allData[allData.length-2].split("|");
+            let a = parseFloat(detail[0]),
+                b = parseFloat(detail[1]),
+                c = parseFloat(detail[2]);
+            let rate = a*b*c*100/(a*b+a*c+b*c);
+            rate = Math.round(rate*100)/100;
+
+            let date = detail[3];
+            // "04-27 19:11".split("-");
+            if(date.split("-")[0].length < 4) { // 判断第一个是否是年，有可能是有年份的
+                let year = new Date().getFullYear();
+                let month = Number.parseInt(date.split("-")[0]);
+                if(month > 8) { //  很少提前4个月开出，故认为年份要-1
+                    year--;
                 }
-                let detail = item.split("|");
-                let a = parseFloat(detail[0]),
-                    b = parseFloat(detail[1]),
-                    c = parseFloat(detail[2]);
-                let rate = a*b*c*100/(a*b+a*c+b*c);
-                rate = Math.round(rate*100)/100;
+                date = `${year}-${date}`;
+            }
 
-                let date = detail[3];
-                // "04-27 19:11".split("-");
-                if(date.split("-")[0].length < 4) { // 判断第一个是否是年，有可能是有年份的
-                    let year = new Date().getFullYear();
-                    let month = Number.parseInt(date.split("-")[0]);
-                    if(month > 8) { //  很少提前4个月开出，故认为年份要-1
-                        year--;
-                    }
-                    date = `${year}-${date}`;
-                    date = date.replace(/-/g, "-")
-                }
-
-                let iData = [a,b,c,date,rate];
-                williamList.push(iData)
-
-            });
+            let iData = [a,b,c,date,rate];
+            if(arr[0] === L_code) {
+                saveData.L = iData
+            }
+            if(arr[0] === W_code) {
+                saveData.W = iData
+            }
         }
 
     });
 
-    return writeFun(data,williamList.reverse())
+    return writeFun(data,saveData)
 };
 module.exports = start;
 

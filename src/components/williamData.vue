@@ -21,6 +21,7 @@ export default {
     methods: {
         initData () {
             if(!this.william) {
+                this.text = "";
                 return
             }
             let william = this.william;
