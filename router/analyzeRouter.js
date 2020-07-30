@@ -84,20 +84,26 @@ module.exports = (app) => {
         if(_analyze.round) {
             params.round = _analyze.round;
         }
+        let page = _analyze.page - 1;
 
-        Analyze.find(params).limit(20).sort({_id:-1}).exec((idErr, list)  => {
-            if (idErr) {
+        Analyze.find(params).countDocuments({}).exec( (err, total) => {
+            Analyze.find(params).limit(20).skip(20*page).sort({_id:-1}).exec((idErr, list)  => {
+                if (idErr) {
+                    res.json({
+                        code : 400,
+                        message : idErr
+                    })
+                    return
+                }
                 res.json({
-                    code : 400,
-                    message : idErr
+                    code : 200,
+                    data : {
+                        total : total,
+                        list : list
+                    }
                 })
-                return
-            }
-            res.json({
-                code : 200,
-                data : list
-            })
-        });
+            });
+        })
     })
     app.post('/analyze/upload', async (req, res) => {
         const _analyze = req.body;

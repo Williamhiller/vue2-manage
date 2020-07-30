@@ -40,7 +40,7 @@
             <el-divider></el-divider>
             <div class="table_container">
                 <el-table
-                    :data="tableData"
+                    :data="tableData.list"
                     border
                     style="width: 100%">
                     <el-table-column
@@ -83,92 +83,101 @@
                         </template>
                     </el-table-column>
                 </el-table>
+                <el-pagination
+                    style="margin-top : 15px"
+                    background
+                    @current-change="getList"
+                    :page-size="20"
+                    layout="prev, pager, next, jumper"
+                    :total="tableData.total">
+                </el-pagination>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import { getAnalyzeList, deleteAnalyze } from '@/api/getData'
-    import headTop from '../../components/headTop'
+import { getAnalyzeList, deleteAnalyze } from '@/api/getData'
+import headTop from '../../components/headTop'
 
-    export default {
-        data(){
-            return {
-                match : '',
-                round : '',
-                code : '',
-                tableData: [],
-                options: [],
-                normalOptions: ['全部','西甲', '意甲', '英超', '英冠', '德甲', '欧冠']
+export default {
+    data(){
+        return {
+            match : '',
+            round : '',
+            code : '',
+            tableData: [],
+            options: [],
+            normalOptions: ['全部','西甲', '意甲', '英超', '英冠', '德甲', '欧冠']
+        }
+    },
+    components: {
+        headTop
+    },
+    computed: {
+
+    },
+    methods: {
+        filterMatch(value, row) {
+            return row.match === value;
+        },
+        async getList(page){
+            let params = {
+                match: this.match === '全部' ? '' : this.match,
+                round: this.round,
+                code: this.code,
+                page : page || 1
+            };
+
+            const res = await getAnalyzeList(params);
+            if (res.data.code === 200) {
+                this.$message({
+                    type: 'success',
+                    message: '查询成功'
+                });
+                this.tableData = res.data.data;
+                let arr = [], options = [];
+                this.tableData.list.forEach((item) => {
+                    if(!arr.includes(item.match)) {
+                        options.push({
+                            text: item.match, value: item.match
+                        });
+                        arr.push(item.match)
+                    }
+                });
+                this.options = options;
+            }else{
+                this.$message.error("查询失败");
             }
         },
-    	components: {
-    		headTop
-    	},
-        computed: {
-
+        goReplay (code) {
+            this.$router.push( {path:"/replay", query:{code:code}})
         },
-        methods: {
-            filterMatch(value, row) {
-                return row.match === value;
-            },
-            async getList(){
-                let params = {
-                    match: this.match === '全部' ? '' : this.match,
-                    round: this.round,
-                    code: this.code
-                };
-
-                const res = await getAnalyzeList(params);
+        async deleteAnalyze (code) {
+            this.$confirm('此操作将永久删除该文章, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(async () => {
+                let res = await deleteAnalyze(code)
                 if (res.data.code === 200) {
                     this.$message({
                         type: 'success',
-                        message: '查询成功'
+                        message: '删除成功'
                     });
-                    this.tableData = res.data.data;
-                    let arr = [], options = [];
-                    this.tableData.forEach((item) => {
-                        if(!arr.includes(item.match)) {
-                            options.push({
-                                text: item.match, value: item.match
-                            });
-                            arr.push(item.match)
-                        }
-                    });
-                    this.options = options;
+                    this.getList();
                 }else{
-                    this.$message.error("查询失败");
+                    this.$message.error("删除失败");
                 }
-            },
-            goReplay (code) {
-                this.$router.push( {path:"/replay", query:{code:code}})
-            },
-            async deleteAnalyze (code) {
-                this.$confirm('此操作将永久删除该文章, 是否继续?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(async () => {
-                    let res = await deleteAnalyze(code)
-                    if (res.data.code === 200) {
-                        this.$message({
-                            type: 'success',
-                            message: '删除成功'
-                        });
-                        this.getList();
-                    }else{
-                        this.$message.error("删除失败");
-                    }
-                }).catch(() => {
-                    this.$message({
-                        type: 'info',
-                        message: '已取消删除'
-                    });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
                 });
-            }
-        },
-    }
+            });
+        }
+    },
+}
 </script>
 
 <style lang="less">

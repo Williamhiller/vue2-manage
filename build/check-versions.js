@@ -3,7 +3,8 @@ var semver = require('semver')
 var packageConfig = require('../package.json')
 var shell = require('shelljs')
 function exec (cmd) {
-  return require('child_process').execSync(cmd).toString().trim()
+  return '5.4.2'
+  // return require('child_process').execSync(cmd).toString().trim()
 }
 
 var versionRequirements = [
