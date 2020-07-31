@@ -117,7 +117,8 @@ module.exports = (app) => {
             guestScore : _analyze.guestScore,
             first : _analyze.first,
             output : _analyze.output,
-            analyse: _analyze.content
+            analyse: _analyze.content,
+            william: _analyze.william
         };
 
         Analyze.updateOne({code : _analyze.code}, params,{upsert: true}, (idErr, as)  => {
