@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-const login = r => require.ensure([], () => r(require('@/page/login')), 'login');
+// const login = r => require.ensure([], () => r(require('@/page/login')), 'login');
 const manage = r => require.ensure([], () => r(require('@/page/manage')), 'manage');
 const home = r => require.ensure([], () => r(require('@/page/home')), 'home');
 const myAnalyze = r => require.ensure([], () => r(require('@/page/edit/myAnalyze')), 'myAnalyze');
@@ -18,7 +18,7 @@ const push = r => require.ensure([], () => r(require('@/page/setting/push')), 'p
 const routes = [
 	{
 		path: '/',
-		component: login
+		component: manage
 	},
 	{
 		path: '/manage',
