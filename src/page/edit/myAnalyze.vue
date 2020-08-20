@@ -91,6 +91,7 @@
                 if(res.data.code === 200) {
                     this.matchData = res.data.data;
                 }
+                this.match = this.matchData.league
                 this.williamOdd = this.matchData.william;
 
                 this.lineData = {
