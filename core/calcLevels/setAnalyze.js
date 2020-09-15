@@ -30,7 +30,7 @@ let writeFun = function (data, saveData) {
         let h , g;
         let itemDate = new Date("20" + item[0] + " 00:00:00");
         // 开盘时间
-        if(williamDate > itemDate) {
+        if(new Date(williamDate).getTime() > new Date(itemDate).getTime()) {
             if(item[4] === matchData.homeCode) {
                 [h,g] = [item[8],item[9]];
                 // 主场
@@ -49,7 +49,7 @@ let writeFun = function (data, saveData) {
     matchData.guestData.forEach((item) => {
         let h , g;
         let itemDate = new Date("20" + item[0] + " 00:00:00");
-        if(williamDate > itemDate) {
+        if(new Date(williamDate).getTime() > new Date(itemDate).getTime()) {
             if(item[4] === matchData.guestCode) {
                 [h,g] = [item[8],item[9]];
             }else {
@@ -151,7 +151,7 @@ let start = async function (code) {
                 let year = new Date().getFullYear();
                 let month = Number.parseInt(date.split("-")[0]);
                 if(month > 8) { //  很少提前4个月开出，故认为年份要-1
-                    year--;
+                    // year--;
                 }
                 date = `${year}-${date}`;
             }
@@ -169,6 +169,7 @@ let start = async function (code) {
 
     return writeFun(data,saveData)
 };
+start(1914572)
 module.exports = start;
 
 
